@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#2196F3"
+    android:minHeight="?attr/actionBarSize">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true">
+
+        <ImageButton
+            android:id="@+id/ibMail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/ic_mail" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/ibMail"
+            android:background="@drawable/ic_bell" />
+        
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:background="@drawable/icon"
+            android:layout_alignParentLeft="true"/>
+
+
+    </RelativeLayout>
+</android.support.v7.widget.Toolbar>

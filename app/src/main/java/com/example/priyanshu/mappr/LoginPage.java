@@ -1,6 +1,7 @@
 package com.example.priyanshu.mappr;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +27,6 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initialize();
-        Log.v("Tag", "Homepage");
 
         login.setOnClickListener(this);
 

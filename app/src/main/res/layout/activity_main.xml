@@ -122,7 +122,7 @@
             android:layout_below="@+id/textView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:background="#6dbbe1"
+            android:background="@drawable/login_button_color"
             android:text="Login"
             android:textColor="#ffffff"
             android:textStyle="bold" />

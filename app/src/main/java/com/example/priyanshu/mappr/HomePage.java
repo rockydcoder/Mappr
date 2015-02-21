@@ -1,23 +1,23 @@
 package com.example.priyanshu.mappr;
 
-import android.app.Activity;
+import android.graphics.Color;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.example.priyanshu.mappr.tabs.SlidingTabLayout;
 
 
 public class HomePage extends ActionBarActivity {
@@ -28,10 +28,12 @@ public class HomePage extends ActionBarActivity {
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
-    private CharSequence mTitle;
+
+
+    private Toolbar toolbar;
+    private ViewPager mPager;
+    private SlidingTabLayout mTabs;
+    private final int COUNT_OF_TABS = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,49 +41,29 @@ public class HomePage extends ActionBarActivity {
         setContentView(R.layout.activity_home_page);
 
         // Set a toolbar to replace the action bar.
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
+
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        mTabs = (SlidingTabLayout) findViewById(R.id.tabs);
+        mTabs.setDistributeEvenly(true);
+        mTabs.setCustomTabView(R.layout.custom_tab, R.id.tv_tab_title);
+        mTabs.setBackgroundColor(getResources().getColor(R.color.tab_bg));
+        mTabs.setSelectedIndicatorColors(getResources().getColor(R.color.tab_selected_indicator));
+        mTabs.setViewPager(mPager);
+
     }
 
-//    @Override
-//    public void onNavigationDrawerItemSelected(int position) {
-//        // update the main content by replacing fragments
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction()
-//                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-//                .commit();
-//    }
-//
-//    public void onSectionAttached(int number) {
-//        switch (number) {
-//            case 1:
-//                mTitle = getString(R.string.title_section1);
-//                break;
-//            case 2:
-//                mTitle = getString(R.string.title_section2);
-//                break;
-//            case 3:
-//                mTitle = getString(R.string.title_section3);
-//                break;
-//        }
-//    }
-
-//    public void restoreActionBar() {
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-//        actionBar.setDisplayShowTitleEnabled(true);
-//        actionBar.setTitle(mTitle);
-//    }
 
 
     @Override
@@ -112,44 +94,58 @@ public class HomePage extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-//    public static class PlaceholderFragment extends Fragment {
-//        /**
-//         * The fragment argument representing the section number for this
-//         * fragment.
-//         */
-//        private static final String ARG_SECTION_NUMBER = "section_number";
-//
-//        /**
-//         * Returns a new instance of this fragment for the given section
-//         * number.
-//         */
-//        public static PlaceholderFragment newInstance(int sectionNumber) {
-//            PlaceholderFragment fragment = new PlaceholderFragment();
-//            Bundle args = new Bundle();
-//            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-//            fragment.setArguments(args);
-//            return fragment;
-//        }
-//
-//        public PlaceholderFragment() {
-//        }
-//
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                                 Bundle savedInstanceState) {
-//            View rootView = inflater.inflate(R.layout.fragment_home_page, container, false);
-//            return rootView;
-//        }
-//
-//        @Override
-//        public void onAttach(Activity activity) {
-//            super.onAttach(activity);
-////            ((HomePage) activity).onSectionAttached(
-////                    getArguments().getInt(ARG_SECTION_NUMBER));
-//        }
-//    }
+    class MyPagerAdapter extends FragmentPagerAdapter {
+
+        private String[] tabsTitle;
+
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+            tabsTitle = getResources().getStringArray(R.array.home_fragments_list);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            MyFragment myFragment = MyFragment.getInstance(position);
+            return myFragment;
+        }
+
+        @Override
+        public int getCount() {
+            return COUNT_OF_TABS;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return tabsTitle[position];
+        }
+    }
+
+    public static class MyFragment extends Fragment {
+
+        private TextView textView;
+        private static String keyPosition = "position";
+
+        public static MyFragment getInstance(int position) {
+            MyFragment myFragment = new MyFragment();
+            Bundle args = new Bundle();
+            args.putInt(keyPosition, position);
+            myFragment.setArguments(args);
+            return myFragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View layout = inflater.inflate(R.layout.fragment_text, container, false);
+            textView = (TextView) layout.findViewById(R.id.label);
+            String[] fragmentsList = getResources().getStringArray(R.array.home_fragments_list);
+            Bundle bundle = getArguments();
+            if(bundle != null) {
+                textView.setText(fragmentsList[bundle.getInt(keyPosition)]);
+            }
+
+            return layout;
+        }
+    }
+
 
 }

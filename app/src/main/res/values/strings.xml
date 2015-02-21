@@ -20,4 +20,11 @@
         <item>Trends</item>
     </string-array>
 
+    <string-array name="home_fragments_list">
+        <item>TIMELINE</item>
+        <item>GROUPS</item>
+        <item>TEACHERS</item>
+        <item>STUDENTS</item>
+    </string-array>
+
 </resources>

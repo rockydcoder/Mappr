@@ -2,4 +2,7 @@
 <resources>
     <drawable name="login_normal">#6dbbe1</drawable>
     <drawable name="login_pressed">#FF5722</drawable>
+    <color name="color_accent">#FF5722</color>
+    <color name="tab_bg">#2196F3</color>
+    <color name="tab_selected_indicator">#FFF</color>
 </resources>

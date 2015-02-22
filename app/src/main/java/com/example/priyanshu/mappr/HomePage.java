@@ -105,8 +105,18 @@ public class HomePage extends ActionBarActivity {
 
         @Override
         public Fragment getItem(int position) {
-            MyFragment myFragment = MyFragment.getInstance(position);
-            return myFragment;
+            switch(position) {
+                case 0:
+                    return new MyFragment();
+                case 1:
+                    return new GroupsFragment();
+                case 2:
+                    return new TeachersFragment();
+                case 3:
+                    return new StudentsFragment();
+            }
+
+            return null;
         }
 
         @Override
@@ -122,26 +132,15 @@ public class HomePage extends ActionBarActivity {
 
     public static class MyFragment extends Fragment {
 
-        private TextView textView;
-        private static String keyPosition = "position";
 
         public static MyFragment getInstance(int position) {
             MyFragment myFragment = new MyFragment();
-            Bundle args = new Bundle();
-            args.putInt(keyPosition, position);
-            myFragment.setArguments(args);
             return myFragment;
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View layout = inflater.inflate(R.layout.fragment_text, container, false);
-            textView = (TextView) layout.findViewById(R.id.label);
-            String[] fragmentsList = getResources().getStringArray(R.array.home_fragments_list);
-            Bundle bundle = getArguments();
-            if(bundle != null) {
-                textView.setText(fragmentsList[bundle.getInt(keyPosition)]);
-            }
 
             return layout;
         }

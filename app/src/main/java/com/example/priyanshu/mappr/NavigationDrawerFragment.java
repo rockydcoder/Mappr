@@ -206,27 +206,11 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-//    private void selectItem(int position) {
-//        mCurrentSelectedPosition = position;
-//        if (mDrawerListView != null) {
-//            mDrawerListView.setItemChecked(position, true);
-//        }
-//        if (mDrawerLayout != null) {
-//            mDrawerLayout.closeDrawer(mFragmentContainerView);
-//        }
-//        if (mCallbacks != null) {
-//            mCallbacks.onNavigationDrawerItemSelected(position);
-//        }
-//    }
+
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-//        try {
-//            mCallbacks = (NavigationDrawerCallbacks) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException("Activity must implement NavigationDrawerCallbacks.");
-//        }
     }
 
     @Override
@@ -273,28 +257,9 @@ public class NavigationDrawerFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Per the navigation drawer design guidelines, updates the action bar to show the global app
-     * 'context', rather than just what's in the current screen.
-     */
-//    private void showGlobalContextActionBar() {
-//        ActionBar actionBar = getActionBar();
-//        actionBar.setDisplayShowTitleEnabled(true);
-//        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-//        actionBar.setTitle(R.string.app_name);
-//    }
-
     private ActionBar getActionBar() {
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
     }
 
-    /**
-     * Callbacks interface that all activities using this fragment must implement.
-     */
-//    public static interface NavigationDrawerCallbacks {
-//        /**
-//         * Called when an item in the navigation drawer is selected.
-//         */
-//        void onNavigationDrawerItemSelected(int position);
-//    }
+
 }

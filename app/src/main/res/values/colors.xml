@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <drawable name="login_normal">#6dbbe1</drawable>
-    <drawable name="login_pressed">#FF5722</drawable>
+    <drawable name="login_pressed">#1976D2</drawable>
     <color name="color_accent">#FF5722</color>
-    <color name="tab_bg">#2196F3</color>
+    <color name="primary">#2196F3</color>
     <color name="primary_dark">#1976D2</color>
     <color name="tab_selected_indicator">#FFF</color>
 </resources>

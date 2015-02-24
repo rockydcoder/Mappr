@@ -39,21 +39,10 @@ public class GroupsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.list_fragment_default, container, false);
         mRecyclerView = (RecyclerView) layout.findViewById(R.id.groups_list);
-//        floatingActionButton = (FloatingActionButton) layout.findViewById(R.id.fab);
-//        floatingActionButton.attachToRecyclerView(mRecyclerView);
-//        floatingActionButton.show();
         customAdapter = new CustomAdapter(getActivity(), getData());
         mRecyclerView.setAdapter(customAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-//        ImageView icon = new ImageView(getActivity().getBaseContext()); // Create an icon
-//        icon.setImageResource(R.drawable.ic_action_edit);
-//
-//        FloatingActionButton actionButton = new
-//                com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton.Builder(this.getActivity())
-//                .setContentView(icon)
-//                .build();
-//        actionButton.setActivated(false);
 
 
         return layout;
@@ -67,13 +56,11 @@ public class GroupsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("Tag", "Resume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d("Tag", "Pause");
     }
 
     public static List<SingleRowData> getData() {

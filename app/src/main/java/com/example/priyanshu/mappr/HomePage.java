@@ -1,7 +1,5 @@
 package com.example.priyanshu.mappr;
 
-import android.graphics.Color;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -9,18 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.priyanshu.mappr.tabs.SlidingTabLayout;
-import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.software.shell.fab.ActionButton;
 
 
@@ -35,7 +27,7 @@ public class HomePage extends ActionBarActivity {
     private ViewPager mPager;
     private SlidingTabLayout mTabs;
     private final int COUNT_OF_TABS = 4;
-    ActionButton actionButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,36 +52,10 @@ public class HomePage extends ActionBarActivity {
         mTabs = (SlidingTabLayout) findViewById(R.id.tabs);
         mTabs.setDistributeEvenly(true);
         mTabs.setCustomTabView(R.layout.custom_tab, R.id.tv_tab_title);
-        mTabs.setBackgroundColor(getResources().getColor(R.color.tab_bg));
+        mTabs.setBackgroundColor(getResources().getColor(R.color.primary));
         mTabs.setSelectedIndicatorColors(getResources().getColor(R.color.tab_selected_indicator));
         mTabs.setViewPager(mPager);
 
-//        actionButton =(ActionButton)findViewById(R.id.action_button);
-//        actionButton.setButtonColor(getResources().getColor(R.color.tab_bg));
-//        actionButton.setButtonColorPressed(getResources().getColor(R.color.primary_dark));
-//        actionButton.setImageResource(R.drawable.ic_action_edit);
-//        actionButton.show();
-
-//        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                Log.d("onPageSelected",position+"");
-//                if(position==0)
-//                    actionButton.show();
-//                else
-//                    actionButton.hide();
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
     }
 
     @Override
@@ -166,21 +132,7 @@ public class HomePage extends ActionBarActivity {
         }
     }
 
-    public static class MyFragment extends Fragment {
 
-
-        public static MyFragment getInstance(int position) {
-            MyFragment myFragment = new MyFragment();
-            return myFragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View layout = inflater.inflate(R.layout.fragment_text, container, false);
-
-            return layout;
-        }
-    }
 
 
 }

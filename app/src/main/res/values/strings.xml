@@ -11,6 +11,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
+    <string name="card_text_default">No posts added!</string>
+    <string name="card_text_modified">No more posts!</string>
     
     <string-array name="navigation_drawer_list">
         <item>Home</item>

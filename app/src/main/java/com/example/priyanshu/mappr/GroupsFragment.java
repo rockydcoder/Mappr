@@ -47,13 +47,11 @@ public class GroupsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("Tag", "Resume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d("Tag", "Pause");
     }
 
     public static List<SingleRowData> getData() {

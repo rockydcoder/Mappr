@@ -1,7 +1,7 @@
 package com.example.priyanshu.mappr;
 
 
-import android.content.Context;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+
+import com.software.shell.fab.ActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +27,7 @@ public class GroupsFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private CustomAdapter customAdapter;
-//    private FloatingActionButton floatingActionButton;
+    private ActionButton actionButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,12 +36,44 @@ public class GroupsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.list_fragment_default, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View layout = inflater.inflate(R.layout.layout_groups, container, false);
         mRecyclerView = (RecyclerView) layout.findViewById(R.id.groups_list);
         customAdapter = new CustomAdapter(getActivity(), getData());
         mRecyclerView.setAdapter(customAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        actionButton = (ActionButton) layout.findViewById(R.id.group_action_button);
+        actionButton.setButtonColor(getResources().getColor(R.color.primary));
+        actionButton.setButtonColorPressed(getResources().getColor(R.color.primary_dark));
+        actionButton.setImageResource(R.drawable.ic_action_new);
+        actionButton.show();
+
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(container.getContext());
+                Button cancel, add;
+
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.layout_dialog_group);
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+
+                cancel = (Button) dialog.findViewById(R.id.cancel);
+                add = (Button) dialog.findViewById(R.id.okay);
+
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // when cancel button is clicked
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+            }
+        });
         return layout;
     }
 

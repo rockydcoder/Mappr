@@ -3,6 +3,31 @@
     xmlns:card="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
+
+
+    <!--<it.gmariotti.cardslib.library.view.CardViewNative-->
+        <!--card:card_layout_resourceID="@layout/custom_card_layout"-->
+        <!--android:id="@+id/card"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="12dp"-->
+        <!--android:layout_marginRight="12dp"-->
+        <!--android:layout_marginTop="12dp"-->
+        <!--android:foreground="?android:attr/selectableItemBackground"-->
+        <!--android:clickable="true"/>-->
+
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/cardList"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--/>-->
+    <it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        card:list_card_layout_resourceID="@layout/recyclerview_card_layout"
+        android:id="@+id/card_recyclerview"/>
     <com.software.shell.fab.ActionButton
         android:id="@+id/action_button"
         android:layout_width="wrap_content"
@@ -12,17 +37,4 @@
         android:layout_marginRight="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin"
         android:layout_gravity="bottom|right"/>
-
-
-
-    <it.gmariotti.cardslib.library.view.CardViewNative
-        card:card_layout_resourceID="@layout/card_layout"
-        android:id="@+id/card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginTop="12dp"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true"/>
 </RelativeLayout>

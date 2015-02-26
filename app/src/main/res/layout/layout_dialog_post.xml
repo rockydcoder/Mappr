@@ -10,6 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:inputType="textMultiLine"
+        android:ems="10"
         android:hint="Create new post"
         android:padding="8dp" />
 
@@ -42,4 +44,6 @@
         android:background="@color/primary"
         android:textColor="#CCCCCC"
         android:text="Okay" />
+
+
 </RelativeLayout>

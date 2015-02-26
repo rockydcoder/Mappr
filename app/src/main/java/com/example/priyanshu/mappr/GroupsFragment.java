@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.software.shell.fab.ActionButton;
 
@@ -28,6 +29,8 @@ public class GroupsFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private CustomAdapter customAdapter;
     private ActionButton actionButton;
+    private static List<SingleRowData> data = new ArrayList<>();
+    private static boolean check = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public class GroupsFragment extends Fragment {
             public void onClick(View v) {
                 final Dialog dialog = new Dialog(container.getContext());
                 Button cancel, add;
+                final EditText etTitle;
 
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.layout_dialog_group);
@@ -61,7 +65,8 @@ public class GroupsFragment extends Fragment {
                 dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
                 cancel = (Button) dialog.findViewById(R.id.cancel);
-                add = (Button) dialog.findViewById(R.id.okay);
+                add = (Button) dialog.findViewById(R.id.add);
+                etTitle = (EditText) dialog.findViewById(R.id.editText);
 
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -71,39 +76,46 @@ public class GroupsFragment extends Fragment {
                     }
                 });
 
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // when add button is clicked
+                        String title = etTitle.getText().toString();
+                        if(title != null) {
+                            addData(title);
+                            dialog.dismiss();
+                        }
+                    }
+                });
+
                 dialog.show();
             }
         });
         return layout;
     }
 
-    @Override
-    public void onStart() {
-        Log.d("Group","Start");
-        super.onStart();
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
 
     public static List<SingleRowData> getData() {
-        List<SingleRowData> data = new ArrayList<>();
-        String[] titles = {"Group 1", "Group 2", "Group 3", "Group 4", "Group 5"};
-        for(int i = 0; i < titles.length; i++) {
-            SingleRowData current = new SingleRowData();
-            current.setIconId(R.drawable.user);
-            current.setText(titles[i]);
-            data.add(current);
+        if(check)
+        {
+            check = false;
+            String[] titles = {"Group 1", "Group 2", "Group 3", "Group 4", "Group 5"};
+            for(int i = 0; i < titles.length; i++) {
+                SingleRowData current = new SingleRowData();
+                current.setIconId(R.drawable.user);
+                current.setText(titles[i]);
+                data.add(current);
+            }
         }
-
         return data;
 
+    }
+
+    public static void addData(String title) {
+        SingleRowData current = new SingleRowData();
+        current.setIconId(R.drawable.user);
+        current.setText(title);
+        data.add(current);
     }
 }
 

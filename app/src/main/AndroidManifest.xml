@@ -18,6 +18,9 @@
         <activity
             android:name=".HomePage" >
         </activity>
+        <activity
+            android:name=".CommentPage" >
+        </activity>
     </application>
 
 </manifest>

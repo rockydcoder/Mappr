@@ -17,42 +17,123 @@
   ~   limitations under the License.
   ~  *****************************************************************************
   -->
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/card_inner_main">
+<RelativeLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/reply_layout">
 
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/comment"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/reply"
-        android:layout_toLeftOf="@+id/reply"
-        android:layout_toStartOf="@+id/reply" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reply"
-        android:background="@drawable/reply_button_color"
-        android:id="@+id/reply"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
     <!--<android.support.v7.widget.RecyclerView-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:id="@+id/comments_list"-->
-        <!--android:layout_below="@+id/reply"-->
-        <!--android:layout_alignParentLeft="true"-->
-       <!-->-->
-    <!--</android.support.v7.widget.RecyclerView>-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--/>-->
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/commentLayout">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/NoCommentLayout"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="...view more comments"
+            android:layout_marginBottom="2dp"
+            android:id="@+id/more_comment"
+            android:textAllCaps="false"
+            android:background="#0000"
+            />
+        <!--<View-->
+            <!--android:id="@+id/divider1"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:layout_marginBottom="5dp"-->
+            <!--android:background="@android:color/darker_gray"/>-->
+    </LinearLayout>
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/comment1Layout"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+        <include
+            android:id="@+id/commentRow1"
+            layout="@layout/comment_row"
+            />
+        <!--<View-->
+            <!--android:id="@+id/divider2"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:layout_marginBottom="5dp"-->
+            <!--android:background="@android:color/darker_gray"/>-->
+        </LinearLayout>
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/comment2Layout"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+        <include
+            android:id="@+id/commentRow2"
+            layout="@layout/comment_row"
+            />
+        <!--<View-->
+            <!--android:id="@+id/divider3"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:layout_marginBottom="5dp"-->
+            <!--android:background="@android:color/darker_gray"/>-->
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/replyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/commentLayout"
+        android:weightSum="1">
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:id="@+id/commentText"
+        android:layout_below="@+id/commentLayout"
+        android:layout_toLeftOf="@+id/replyButton"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="bottom|left"
+        android:layout_weight="1.01" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/commentLayout"
+        android:src="@drawable/reply_button"
+        android:id="@+id/replyButton"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|right"
+        />
+
+    </LinearLayout>
 </RelativeLayout>
 
+</RelativeLayout>

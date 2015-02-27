@@ -1,27 +1,29 @@
-package com.example.priyanshu.mappr;
+package com.example.priyanshu.mappr.Fragments;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.priyanshu.mappr.CustomAdapter;
+import com.example.priyanshu.mappr.R;
+import com.example.priyanshu.mappr.SingleRowData;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by rocky on 22/2/15.
  */
-public class GroupsFragment extends Fragment {
+public class StudentsFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private CustomAdapter customAdapter;
-//    private FloatingActionButton floatingActionButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,24 +41,9 @@ public class GroupsFragment extends Fragment {
         return layout;
     }
 
-    @Override
-    public void onStart() {
-        Log.d("Group","Start");
-        super.onStart();
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
     public static List<SingleRowData> getData() {
         List<SingleRowData> data = new ArrayList<>();
-        String[] titles = {"Group 1", "Group 2", "Group 3", "Group 4", "Group 5"};
+        String[] titles = {"Student 1", "Student 2", "Student 3", "Student 4", "Student 5"};
         for(int i = 0; i < titles.length; i++) {
             SingleRowData current = new SingleRowData();
             current.setIconId(R.drawable.user);

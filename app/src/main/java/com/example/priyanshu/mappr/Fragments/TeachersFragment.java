@@ -1,4 +1,4 @@
-package com.example.priyanshu.mappr;
+package com.example.priyanshu.mappr.Fragments;
 
 
 import android.os.Bundle;
@@ -10,13 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.priyanshu.mappr.CustomAdapter;
+import com.example.priyanshu.mappr.R;
+import com.example.priyanshu.mappr.SingleRowData;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by rocky on 22/2/15.
  */
-public class StudentsFragment extends Fragment {
+public class TeachersFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private CustomAdapter customAdapter;
@@ -39,7 +43,7 @@ public class StudentsFragment extends Fragment {
 
     public static List<SingleRowData> getData() {
         List<SingleRowData> data = new ArrayList<>();
-        String[] titles = {"Student 1", "Student 2", "Student 3", "Student 4", "Student 5"};
+        String[] titles = {"Teacher 1", "Teacher 2", "Teacher 3", "Teacher 4", "Teacher 5"};
         for(int i = 0; i < titles.length; i++) {
             SingleRowData current = new SingleRowData();
             current.setIconId(R.drawable.user);

@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.software.shell.fab.ActionButton;
 
@@ -31,6 +32,7 @@ public class GroupsFragment extends Fragment {
     private ActionButton actionButton;
     private static List<SingleRowData> data = new ArrayList<>();
     private static boolean check = true;
+    private static MapprDatabaseAdapter mapprDatabaseAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class GroupsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.layout_groups, container, false);
+        mapprDatabaseAdapter = new MapprDatabaseAdapter(container.getContext());
         mRecyclerView = (RecyclerView) layout.findViewById(R.id.groups_list);
         customAdapter = new CustomAdapter(getActivity(), getData());
         mRecyclerView.setAdapter(customAdapter);
@@ -51,6 +54,8 @@ public class GroupsFragment extends Fragment {
         actionButton.setButtonColorPressed(getResources().getColor(R.color.primary_dark));
         actionButton.setImageResource(R.drawable.ic_action_new);
         actionButton.show();
+
+
 
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +88,8 @@ public class GroupsFragment extends Fragment {
                         String title = etTitle.getText().toString();
                         if(title != null) {
                             addData(title);
+                            long id = mapprDatabaseAdapter.insertGroup(title);
+                            Toast.makeText(getActivity(), id + "", Toast.LENGTH_LONG).show();
                             dialog.dismiss();
                         }
                     }
@@ -99,11 +106,11 @@ public class GroupsFragment extends Fragment {
         if(check)
         {
             check = false;
-            String[] titles = {"Group 1", "Group 2", "Group 3", "Group 4", "Group 5"};
-            for(int i = 0; i < titles.length; i++) {
+            List<String> groups = mapprDatabaseAdapter.getGroups();
+            for(int i = 0; i < groups.size(); i++) {
                 SingleRowData current = new SingleRowData();
                 current.setIconId(R.drawable.user);
-                current.setText(titles[i]);
+                current.setText(groups.get(i));
                 data.add(current);
             }
         }

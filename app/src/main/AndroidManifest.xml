@@ -20,6 +20,9 @@
             android:name=".SignUpStudent"
             android:label="@string/title_activity_sign_up_student" >
         </activity>
+        <activity
+            android:name=".CommentPage" >
+        </activity>
     </application>
 
 </manifest>

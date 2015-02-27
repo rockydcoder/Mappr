@@ -1,4 +1,4 @@
-package com.example.priyanshu.mappr;
+package com.example.priyanshu.mappr.Fragments;
 
 
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.priyanshu.mappr.CustomAdapter;
+import com.example.priyanshu.mappr.R;
+import com.example.priyanshu.mappr.SingleRowData;
 
 import java.util.ArrayList;
 import java.util.List;

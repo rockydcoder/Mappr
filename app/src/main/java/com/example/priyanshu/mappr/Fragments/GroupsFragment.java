@@ -1,5 +1,4 @@
-package com.example.priyanshu.mappr;
-
+package com.example.priyanshu.mappr.Fragments;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -11,6 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.priyanshu.mappr.CustomAdapter;
+import com.example.priyanshu.mappr.MapprDatabaseAdapter;
+import com.example.priyanshu.mappr.R;
+import com.example.priyanshu.mappr.SingleRowData;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;

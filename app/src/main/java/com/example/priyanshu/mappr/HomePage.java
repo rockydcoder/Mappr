@@ -1,17 +1,25 @@
 package com.example.priyanshu.mappr;
 
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.os.Bundle;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.support.v4.widget.DrawerLayout;
+import android.widget.Toast;
 
+import com.example.priyanshu.mappr.Fragments.GroupsFragment;
+import com.example.priyanshu.mappr.Fragments.NavigationDrawerFragment;
+import com.example.priyanshu.mappr.Fragments.StudentsFragment;
+import com.example.priyanshu.mappr.Fragments.TeachersFragment;
+import com.example.priyanshu.mappr.Fragments.TimelineFragment;
 import com.example.priyanshu.mappr.tabs.SlidingTabLayout;
 
 
@@ -69,7 +77,6 @@ public class HomePage extends ActionBarActivity {
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.home_page, menu);
-//            restoreActionBar();
             return true;
         }
         return super.onCreateOptionsMenu(menu);
@@ -114,7 +121,6 @@ public class HomePage extends ActionBarActivity {
 
             return null;
         }
-
         @Override
         public int getItemPosition(Object object) {
             return super.getItemPosition(object);

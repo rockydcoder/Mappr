@@ -34,7 +34,7 @@ public class StudentsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.list_fragment_default, container, false);
-        mRecyclerView = (RecyclerView) layout.findViewById(R.id.groups_list);
+        mRecyclerView = (RecyclerView) layout.findViewById(R.id.default_list);
         customAdapter = new CustomAdapter(getActivity(), getData());
         mRecyclerView.setAdapter(customAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

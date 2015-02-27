@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -96,7 +97,7 @@ public class HomePage extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    class MyPagerAdapter extends FragmentStatePagerAdapter {
+    class MyPagerAdapter extends FragmentPagerAdapter {
 
         private String[] tabsTitle;
 

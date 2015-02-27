@@ -29,4 +29,14 @@
         <item>STUDENTS</item>
     </string-array>
 
+    <string name="title_activity_sign_up_student">SignUpStudent</string>
+
+    <string-array name="title_list">
+        <item>None</item>
+        <item>Mr.</item>
+        <item>Ms.</item>
+        <item>Mrs.</item>
+        <item>Dr.</item>
+    </string-array>
+
 </resources>

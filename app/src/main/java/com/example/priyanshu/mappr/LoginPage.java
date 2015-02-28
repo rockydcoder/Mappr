@@ -26,6 +26,7 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
+
         initialize();
 
         login.setOnClickListener(this);

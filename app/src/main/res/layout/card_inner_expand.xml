@@ -35,42 +35,43 @@
         <!--android:id="@+id/comments_list"-->
         <!--android:layout_marginBottom="10dp"-->
         <!--/>-->
+    <TextView
+        android:id="@+id/more_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text=""
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="0dp"
+        android:textAllCaps="false"
+        />
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:id="@+id/commentLayout">
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:id="@+id/NoCommentLayout"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="...view more comments"
-            android:layout_marginBottom="2dp"
-            android:id="@+id/more_comment"
-            android:textAllCaps="false"
-            android:background="#0000"
-            />
-        <!--<View-->
-            <!--android:id="@+id/divider1"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_marginTop="5dp"-->
-            <!--android:layout_marginBottom="5dp"-->
-            <!--android:background="@android:color/darker_gray"/>-->
-    </LinearLayout>
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp">
+
+        &lt;!&ndash;<View&ndash;&gt;
+            &lt;!&ndash;android:id="@+id/divider1"&ndash;&gt;
+            &lt;!&ndash;android:layout_width="fill_parent"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="1dp"&ndash;&gt;
+            &lt;!&ndash;android:layout_marginTop="5dp"&ndash;&gt;
+            &lt;!&ndash;android:layout_marginBottom="5dp"&ndash;&gt;
+            &lt;!&ndash;android:background="@android:color/darker_gray"/>&ndash;&gt;
+    </LinearLayout>-->
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:id="@+id/comment1Layout"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="18dp"
         android:layout_marginBottom="5dp">
         <include
             android:id="@+id/commentRow1"
@@ -105,13 +106,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/replyLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/commentLayout"
-        android:weightSum="1">
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -121,7 +116,8 @@
         android:layout_toLeftOf="@+id/replyButton"
         android:layout_alignParentLeft="true"
         android:layout_gravity="bottom|left"
-        android:layout_weight="1.01" />
+        android:layout_weight="1.01"
+        android:layout_alignBottom="@+id/replyButton" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -133,7 +129,7 @@
         android:layout_gravity="bottom|right"
         />
 
-    </LinearLayout>
+
 </RelativeLayout>
 
 </RelativeLayout>

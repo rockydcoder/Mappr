@@ -19,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -257,7 +258,7 @@ class CustomExpandCard extends CardExpand {
     private CustomAdapter customAdapter;
     static ArrayList<SingleRowData> comments;
     String title="psp";
-    static int noOfComments=0;
+    int noOfComments=0;
     View commentRow1,commentRow2;
     ArrayList<Integer> iconId = null;
     ArrayList<String>  userNames=null;
@@ -265,8 +266,7 @@ class CustomExpandCard extends CardExpand {
 
     ImageView userPic1,userPic2;
     TextView moreComments,userName1,userName2,userComment1,userComment2;
-    View divider1,divider2,divider3;
-    LinearLayout totalLayout,NoCommentLayout,comment1Layout,comment2Layout,replyLayout;
+    LinearLayout totalLayout,comment1Layout,comment2Layout;
     EditText et;
     ImageButton reply;
     //Use your resource ID for your inner layout
@@ -281,7 +281,7 @@ class CustomExpandCard extends CardExpand {
         iconId=new ArrayList<>();
         userNames=new ArrayList<>();
         userComments=new ArrayList<>();
-        View layout=view.findViewById(R.id.commentLayout);
+
         commentRow1=view.findViewById(R.id.commentRow1);
         commentRow2=view.findViewById(R.id.commentRow2);
         moreComments=(TextView)view.findViewById(R.id.more_comment);
@@ -291,25 +291,20 @@ class CustomExpandCard extends CardExpand {
         userName2=(TextView)commentRow2.findViewById(R.id.userName);
         userComment1=(TextView)commentRow1.findViewById(R.id.userComment);
         userComment2=(TextView)commentRow2.findViewById(R.id.userComment);
-        /*divider1=view.findViewById(R.id.divider1);
-        divider2=view.findViewById(R.id.divider2);
-        divider3=view.findViewById(R.id.divider3);*/
+
         totalLayout=(LinearLayout)view.findViewById(R.id.commentLayout);
-        NoCommentLayout=(LinearLayout)totalLayout.findViewById(R.id.NoCommentLayout);
         comment1Layout=(LinearLayout)totalLayout.findViewById(R.id.comment1Layout);
         comment2Layout=(LinearLayout)totalLayout.findViewById(R.id.comment2Layout);
-        replyLayout=(LinearLayout)view.findViewById(R.id.replyLayout);
         et  = (EditText)view.findViewById(R.id.commentText);
         reply = (ImageButton)view.findViewById(R.id.replyButton);
-        updateVisibility(layout);
+        updateVisibility(view);
         et.requestFocus();
         reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(et.getText()!=null) {
-                    String text=et.getText().toString();
-
-                    Log.d("text",text);
+                    String userC2=userComment2.getText().toString();
+                    userComment2.setText("");
                     if(noOfComments==0){
                         userPic1.setImageResource(R.drawable.me);
                         userName1.setText(title);
@@ -319,26 +314,26 @@ class CustomExpandCard extends CardExpand {
                     else if(noOfComments==1){
                         userPic2.setImageResource(R.drawable.me);
                         userName2.setText("psp1");
-                        userComment2.setText(text);
+                        userComment2.setText(et.getText());
 
                     }
                     else {
                         userPic1.setImageDrawable(userPic2.getDrawable());
-                        userName1.setText("");
                         userName1.setText(userName2.getText());
-                        userName2.setText("");
-                        userComment1.setText("");
-                        userComment1.setText(userComment2.getText());
-                        userComment2.setText("");
+                        userComment1.setText(userC2);
                         userPic2.setImageResource(R.drawable.me);
                         userName2.setText(title);
                         userComment2.setText(et.getText());
-                        moreComments.setText("...view "+(noOfComments-2)+" more comments");
+                        String text=(noOfComments-1)==1?"...view 1 more comment":
+                                "...view "+(noOfComments-1)+" more comments";
+                        moreComments.setText(text);
+
                     }
                     iconId.add(userPic1.getId());
                     userNames.add(title);
                     userComments.add(et.getText().toString());
                     noOfComments++;
+                    view.refreshDrawableState();
                     updateVisibility(view);
                     et.setText(null);
                 }
@@ -361,6 +356,7 @@ class CustomExpandCard extends CardExpand {
 
 
     public void updateVisibility(View view){
+        /*totalLayout.setVisibility(View.VISIBLE);
         moreComments.setVisibility(View.GONE);
         userPic1.setVisibility(View.GONE);
         userName1.setVisibility(View.GONE);
@@ -369,7 +365,7 @@ class CustomExpandCard extends CardExpand {
         userName2.setVisibility(View.GONE);
         userComment2.setVisibility(View.GONE);
         et.setVisibility(View.GONE);
-        reply.setVisibility(View.GONE);
+        reply.setVisibility(View.GONE);*/
 
 
         if(noOfComments==0){
@@ -383,39 +379,42 @@ class CustomExpandCard extends CardExpand {
             userName2.setVisibility(View.GONE);
             userPic2.setVisibility(View.GONE);
             userComment2.setVisibility(View.GONE);
+
             et.setVisibility(View.VISIBLE);
             reply.setVisibility(View.VISIBLE);
+            //totalLayout.setVisibility(View.GONE);
+
+
             //divider3.setVisibility(View.GONE);
+//            ((FrameLayout)view.getParent()).removeView(moreComments);
         }
         else if (noOfComments==1){
-            //totalLayout.setVisibility(View.VISIBLE);
             et.setVisibility(View.GONE);
             reply.setVisibility(View.GONE);
+            //totalLayout.setVisibility(View.VISIBLE);
+            moreComments.setVisibility(View.VISIBLE);
             userPic1.setVisibility(View.VISIBLE);
             userName1.setVisibility(View.VISIBLE);
             userComment1.setVisibility(View.VISIBLE);
-            //divider2.setVisibility(View.GONE);
             userName2.setVisibility(View.GONE);
             userPic2.setVisibility(View.GONE);
             userComment2.setVisibility(View.GONE);
 
+            moreComments.setVisibility(View.GONE);
             et.setVisibility(View.VISIBLE);
             reply.setVisibility(View.VISIBLE);
-            //divider3.setVisibility(View.GONE);
+
             et.requestFocus();
 
 
 
         }
         else if(noOfComments==2){
+            et.setVisibility(View.GONE);
+            reply.setVisibility(View.GONE);
             userPic1.setVisibility(View.GONE);
             userName1.setVisibility(View.GONE);
             userComment1.setVisibility(View.GONE);
-            userPic2.setVisibility(View.GONE);
-            userName2.setVisibility(View.GONE);
-            userComment2.setVisibility(View.GONE);
-            et.setVisibility(View.GONE);
-            reply.setVisibility(View.GONE);
 
 
             moreComments.setVisibility(View.VISIBLE);
@@ -425,27 +424,26 @@ class CustomExpandCard extends CardExpand {
             userPic2.setVisibility(View.VISIBLE);
             userName2.setVisibility(View.VISIBLE);
             userComment2.setVisibility(View.VISIBLE);
-
+            moreComments.setVisibility(View.GONE);
             et.setVisibility(View.VISIBLE);
             reply.setVisibility(View.VISIBLE);
 
-            moreComments.setVisibility(View.GONE);
             et.requestFocus();
-            //divider1.setVisibility(View.GONE);
+
         }
         else{
-//            et.setVisibility(View.GONE);
-//            reply.setVisibility(View.GONE);
-            moreComments.setVisibility(View.GONE);
-            userPic1.setVisibility(View.GONE);
-            userName1.setVisibility(View.GONE);
-            userComment1.setVisibility(View.GONE);
+            et.setVisibility(View.GONE);
+            reply.setVisibility(View.GONE);
             userPic2.setVisibility(View.GONE);
             userName2.setVisibility(View.GONE);
             userComment2.setVisibility(View.GONE);
+            userPic1.setVisibility(View.GONE);
+            userName1.setVisibility(View.GONE);
+            userComment1.setVisibility(View.GONE);
+            moreComments.setVisibility(View.GONE);
 
-
-
+            et.setVisibility(View.GONE);
+            reply.setVisibility(View.GONE);
             moreComments.setVisibility(View.VISIBLE);
             userPic1.setVisibility(View.VISIBLE);
             userName1.setVisibility(View.VISIBLE);
@@ -453,8 +451,8 @@ class CustomExpandCard extends CardExpand {
             userPic2.setVisibility(View.VISIBLE);
             userName2.setVisibility(View.VISIBLE);
             userComment2.setVisibility(View.VISIBLE);
-            /*et.setVisibility(View.VISIBLE);
-            reply.setVisibility(View.VISIBLE);*/
+            et.setVisibility(View.VISIBLE);
+            reply.setVisibility(View.VISIBLE);
 
             et.requestFocus();
         }

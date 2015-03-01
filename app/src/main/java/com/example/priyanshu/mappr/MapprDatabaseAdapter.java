@@ -28,11 +28,11 @@ public class MapprDatabaseAdapter {
         return id;
     }
 
-    public List<String> getGroups() {
+    public ArrayList<String> getGroups() {
         SQLiteDatabase db = mapprDatabaseHelper.getWritableDatabase();
         String[] columns = {MapprDatabaseHelper.UID, MapprDatabaseHelper.NAME};
         Cursor cursor = db.query(MapprDatabaseHelper.TABLE_NAME, columns, null, null, null, null, null);
-        List<String> groups = new ArrayList<>();
+        ArrayList<String> groups = new ArrayList<>();
         while(cursor.moveToNext()) {
             String group = cursor.getString(1);
             groups.add(group);

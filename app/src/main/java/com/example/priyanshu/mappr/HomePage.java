@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.priyanshu.mappr.Fragments.GroupsFragment;
@@ -42,6 +43,8 @@ public class HomePage extends ActionBarActivity {
 
         // Set a toolbar to replace the action bar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ImageView user=(ImageView)findViewById(R.id.loggedUser);
+        user.setImageResource(R.drawable.student);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 

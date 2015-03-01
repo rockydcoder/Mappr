@@ -5,7 +5,7 @@
     android:background="@drawable/custom_border">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -15,11 +15,11 @@
         android:hint="Create new post"
         android:padding="8dp" />
 
-    <EditText
-        android:id="@+id/editText2"
+    <AutoCompleteTextView
+        android:id="@+id/group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/post"
         android:layout_centerHorizontal="true"
         android:hint="Enter group name"
         android:padding="8dp" />
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/group"
         android:text="Cancel"
         android:background="@color/primary"
         android:textColor="#CCCCCC"/>
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/group"
         android:background="@color/primary"
         android:textColor="#CCCCCC"
         android:text="Okay" />

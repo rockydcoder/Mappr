@@ -11,12 +11,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -30,6 +33,7 @@ import com.example.priyanshu.mappr.CardInfo;
 import com.example.priyanshu.mappr.CommentPage;
 import com.example.priyanshu.mappr.CommentRow;
 import com.example.priyanshu.mappr.CustomAdapter;
+import com.example.priyanshu.mappr.MapprDatabaseAdapter;
 import com.example.priyanshu.mappr.R;
 import com.example.priyanshu.mappr.SingleRowData;
 import com.software.shell.fab.ActionButton;
@@ -64,13 +68,15 @@ public class TimelineFragment extends Fragment{
     public static String userNameTag="userNames";
     public static String userCommentTag="userComment";
     public static String noOfCommentsTag="noOfComments";
-
+    public static String name="Soham Choksi";
     /***************TimeStamp variables******************/
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
 
+    AutoCompleteTextView group;
+    Dialog dialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,9 +90,9 @@ public class TimelineFragment extends Fragment{
         cards = new ArrayList<>();
         if(savedInstanceState==null){
             cardData=new ArrayList<>();
-            for(int i=1;i<=3;i++) {
+            /*for(int i=1;i<=3;i++) {
                 addCard(cards,title,subTitle,true);
-            }
+            }*/
 
         }
         else{
@@ -108,22 +114,29 @@ public class TimelineFragment extends Fragment{
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+
         //Set the empty view
         if (mRecyclerView != null) {
             mRecyclerView.setAdapter(mCardArrayAdapter);
 
         }
-        //mCardArrayAdapter.onBindViewHolder(new BaseRecyclerViewAdapter.CardViewHolder());
+         //mCardArrayAdapter.onBindViewHolder(new BaseRecyclerViewAdapter.CardViewHolder());
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog dialog = new Dialog(container.getContext());
                 Button cancel, okay;
-
+                dialog = new Dialog(container.getContext());
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.layout_dialog_post);
                 dialog.setCanceledOnTouchOutside(true);
                 dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                MapprDatabaseAdapter mapprDatabaseAdapter=new MapprDatabaseAdapter(dialog.getContext());
+                group=(AutoCompleteTextView)dialog.findViewById(R.id.group);
+                ArrayList<String> groups=mapprDatabaseAdapter.getGroups();
+                ArrayAdapter adapter=new ArrayAdapter(dialog.getContext(),
+                        android.R.layout.simple_expandable_list_item_1,groups);
+                Log.d("list",groups.get(0));
+                group.setAdapter(adapter);
 
                 cancel = (Button) dialog.findViewById(R.id.cancel);
                 okay = (Button) dialog.findViewById(R.id.okay);
@@ -139,6 +152,10 @@ public class TimelineFragment extends Fragment{
                 okay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        EditText post=(EditText)dialog.findViewById(R.id.post);
+                        title="<b>"+name+"</b>"+"<font color='#BBBBBB'> posted in </font>"+
+                                "<b>"+group.getText().toString()+"</b>";
+                        subTitle=post.getText().toString();
                         addCard(cards,title,subTitle,true);
                         mCardArrayAdapter.notifyItemInserted(mCardArrayAdapter.getItemCount());
                         dialog.dismiss();
@@ -176,7 +193,7 @@ public class TimelineFragment extends Fragment{
         card.addCardExpand(expand);
         //thumbnail
         CardThumbnail thumb = new CardThumbnail(getActivity());
-        thumb.setDrawableResource(R.drawable.me);
+        thumb.setDrawableResource(R.drawable.soham);
         card.addCardThumbnail(thumb);
 
         //attach expandable view
@@ -245,7 +262,7 @@ class CustomHeaderInnerCard extends CardHeader {
         if (view!=null){
             TextView t1 = (TextView) view.findViewById(R.id.text_example1);
             if (t1!=null)
-                t1.setText(title);
+                t1.setText(Html.fromHtml(title));
 
             TextView t2 = (TextView) view.findViewById(R.id.text_example2);
             if (t2!=null)
@@ -257,7 +274,7 @@ class CustomExpandCard extends CardExpand {
     private RecyclerView mRecyclerView;
     private CustomAdapter customAdapter;
     static ArrayList<SingleRowData> comments;
-    String title="psp";
+    String title=TimelineFragment.name;
     int noOfComments=0;
     View commentRow1,commentRow2;
     ArrayList<Integer> iconId = null;
@@ -306,13 +323,13 @@ class CustomExpandCard extends CardExpand {
                     String userC2=userComment2.getText().toString();
                     userComment2.setText("");
                     if(noOfComments==0){
-                        userPic1.setImageResource(R.drawable.me);
+                        userPic1.setImageResource(R.drawable.soham);
                         userName1.setText(title);
                         userComment1.setText(et.getText());
 
                     }
                     else if(noOfComments==1){
-                        userPic2.setImageResource(R.drawable.me);
+                        userPic2.setImageResource(R.drawable.soham);
                         userName2.setText("psp1");
                         userComment2.setText(et.getText());
 
@@ -321,7 +338,7 @@ class CustomExpandCard extends CardExpand {
                         userPic1.setImageDrawable(userPic2.getDrawable());
                         userName1.setText(userName2.getText());
                         userComment1.setText(userC2);
-                        userPic2.setImageResource(R.drawable.me);
+                        userPic2.setImageResource(R.drawable.soham);
                         userName2.setText(title);
                         userComment2.setText(et.getText());
                         String text=(noOfComments-1)==1?"...view 1 more comment":

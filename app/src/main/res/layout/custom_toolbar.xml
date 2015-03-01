@@ -21,10 +21,18 @@
             android:background="@drawable/ic_mail" />
 
         <ImageButton
+            android:id="@+id/bell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/ibMail"
             android:background="@drawable/ic_bell" />
+
+        <ImageView
+            android:id="@+id/loggedUser"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
         
         <ImageView
             android:layout_width="wrap_content"

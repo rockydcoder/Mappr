@@ -1,6 +1,7 @@
 package com.example.priyanshu.mappr.Fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -23,7 +24,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.priyanshu.mappr.Behaviour;
 import com.example.priyanshu.mappr.CustomAdapter;
+import com.example.priyanshu.mappr.HomePage;
 import com.example.priyanshu.mappr.R;
 import com.example.priyanshu.mappr.SingleRowData;
 
@@ -35,7 +38,7 @@ import java.util.List;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment {
+public class NavigationDrawerFragment extends Fragment implements CustomAdapter.ViewOnClickListener{
 
     /**
      * Remember the position of the selected item.
@@ -72,6 +75,7 @@ public class NavigationDrawerFragment extends Fragment {
     public NavigationDrawerFragment() {
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +108,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerView = inflater.inflate(R.layout.fragment_navigation_drawer, container);
         mRecyclerView = (RecyclerView) mDrawerView.findViewById(R.id.drawer_list);
         customAdapter = new CustomAdapter(getActivity(), getData());
+        customAdapter.setViewOnClickListener(this);
         mRecyclerView.setAdapter(customAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return mDrawerView;
@@ -264,4 +269,19 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
 
+    @Override
+    public void onItemClick(View item,int position) {
+        Intent intent;
+        switch(position){
+            case 0:
+                intent=new Intent(this.getActivity(), HomePage.class);
+                startActivity(intent);
+                break;
+            default:
+                intent=new Intent(this.getActivity(), Behaviour.class);
+
+
+        }
+        startActivity(intent);
+    }
 }

@@ -23,6 +23,9 @@
         <activity
             android:name=".CommentPage" >
         </activity>
+        <activity
+            android:name=".Behaviour" >
+        </activity>
     </application>
 
 </manifest>

@@ -330,7 +330,7 @@ class CustomExpandCard extends CardExpand {
                     }
                     else if(noOfComments==1){
                         userPic2.setImageResource(R.drawable.soham);
-                        userName2.setText("psp1");
+                        userName2.setText(title);
                         userComment2.setText(et.getText());
 
                     }

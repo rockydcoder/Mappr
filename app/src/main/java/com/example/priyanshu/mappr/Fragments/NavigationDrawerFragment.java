@@ -1,6 +1,7 @@
 package com.example.priyanshu.mappr.Fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -23,9 +24,14 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.priyanshu.mappr.AcademicsActivity;
+import com.example.priyanshu.mappr.BehaviourActivity;
 import com.example.priyanshu.mappr.CustomAdapter;
+import com.example.priyanshu.mappr.ExCurActivity;
+import com.example.priyanshu.mappr.HomeActivity;
 import com.example.priyanshu.mappr.R;
 import com.example.priyanshu.mappr.SingleRowData;
+import com.example.priyanshu.mappr.TrendsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +41,7 @@ import java.util.List;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment {
+public class NavigationDrawerFragment extends Fragment implements CustomAdapter.ClickListener{
 
     /**
      * Remember the position of the selected item.
@@ -104,6 +110,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerView = inflater.inflate(R.layout.fragment_navigation_drawer, container);
         mRecyclerView = (RecyclerView) mDrawerView.findViewById(R.id.drawer_list);
         customAdapter = new CustomAdapter(getActivity(), getData());
+        customAdapter.setClickListener(this);
         mRecyclerView.setAdapter(customAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return mDrawerView;
@@ -123,6 +130,8 @@ public class NavigationDrawerFragment extends Fragment {
         return data;
 
     }
+
+
 
     public boolean isDrawerOpen() {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
@@ -264,4 +273,30 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
 
+    @Override
+    public void itemClicked(View view, int position) {
+        switch (position) {
+
+            case 0:
+                startActivity(new Intent(getActivity(), HomeActivity.class));
+                break;
+            
+            case 1:
+                startActivity(new Intent(getActivity(), AcademicsActivity.class));
+                break;
+
+            case 2:
+                startActivity(new Intent(getActivity(), ExCurActivity.class));
+                break;
+
+            case 3:
+                startActivity(new Intent(getActivity(), BehaviourActivity.class));
+                break;
+
+            case 4:
+                startActivity(new Intent(getActivity(), TrendsActivity.class));
+                break;
+        }
+
+    }
 }

@@ -71,7 +71,7 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.login:
-                Intent intent = new Intent(LoginPage.this, HomePage.class);
+                Intent intent = new Intent(LoginPage.this, HomeActivity.class);
                 startActivity(intent);
                 break;
 

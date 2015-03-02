@@ -17,6 +17,7 @@ import java.util.List;
  */
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
     private LayoutInflater inflater;
+    private CustomAdapter.ClickListener clickListener;
     List<SingleRowData> data = Collections.emptyList();
 
     public CustomAdapter(Context context, List<SingleRowData> data) {
@@ -43,15 +44,32 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         return data.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    public void setClickListener(CustomAdapter.ClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvTitle;
         private ImageView ivLogo, ivArrow;
 
         public MyViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             ivLogo = (ImageView) itemView.findViewById(R.id.ivLogo);
             ivArrow = (ImageView) itemView.findViewById(R.id.ivArrow);
         }
+
+        @Override
+        public void onClick(View v) {
+            if(clickListener != null) {
+                clickListener.itemClicked(v, getPosition());
+            }
+
+        }
+    }
+
+    public interface ClickListener {
+        public void itemClicked(View view, int position);
     }
 }

@@ -14,14 +14,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomePage" >
+        <activity android:name=".HomeActivity" >
         </activity>
         <activity
             android:name=".SignUpStudent"
             android:label="@string/title_activity_sign_up_student" >
         </activity>
+        <activity android:name=".CommentPage" >
+        </activity>
         <activity
-            android:name=".CommentPage" >
+            android:name=".AcademicsActivity"
+            android:label="@string/title_activity_academics" >
+        </activity>
+        <activity
+            android:name=".ExCurActivity"
+            android:label="@string/title_activity_ex_cur" >
+        </activity>
+        <activity
+            android:name=".BehaviourActivity"
+            android:label="@string/title_activity_behaviour" >
+        </activity>
+        <activity
+            android:name=".TrendsActivity"
+            android:label="@string/title_activity_trends" >
         </activity>
     </application>
 

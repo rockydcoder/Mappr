@@ -29,9 +29,9 @@ import com.example.priyanshu.mappr.Activities.BehaviourActivity;
 import com.example.priyanshu.mappr.Adapters.CustomAdapter;
 import com.example.priyanshu.mappr.Activities.ExCurActivity;
 import com.example.priyanshu.mappr.Activities.HomeActivity;
-import com.example.priyanshu.mappr.R;
 import com.example.priyanshu.mappr.Data.SingleRowData;
 import com.example.priyanshu.mappr.Activities.TrendsActivity;
+import com.example.priyanshu.mappr.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +76,7 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
     private boolean mUserLearnedDrawer;
     private CustomAdapter customAdapter;
     private RecyclerView mRecyclerView;
+    private static String[] titles;
 
     public NavigationDrawerFragment() {
     }
@@ -95,8 +96,7 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
             mFromSavedInstanceState = true;
         }
 
-        // Select either the default item (0) or the last selected item.
-//        selectItem(mCurrentSelectedPosition);
+        titles = getResources().getStringArray(R.array.navigation_drawer_list);
     }
 
     @Override
@@ -122,7 +122,6 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
     public static List<SingleRowData> getData() {
         List<SingleRowData> data = new ArrayList<>();
         int[] icons = {R.drawable.home, R.drawable.grad_cap, R.drawable.trophy, R.drawable.magnify, R.drawable.trends};
-        String[] titles = {"Home", "Academics", "Extra-curricular", "Behavior", "Trends"};
         for(int i = 0; i < titles.length; i++) {
             SingleRowData current = new SingleRowData();
             current.setIconId(icons[i]);
@@ -230,13 +229,11 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
     @Override
     public void onDetach() {
         super.onDetach();
-//        mCallbacks = null;
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-//        outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
     }
 
     @Override
@@ -275,7 +272,7 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
     }
 
-
+    // overriden method of interface
     @Override
     public void onItemClick(View view, int position) {
         switch (position) {

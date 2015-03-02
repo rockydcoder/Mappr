@@ -1,4 +1,4 @@
-package com.example.priyanshu.mappr;
+package com.example.priyanshu.mappr.Activities;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+
+import com.example.priyanshu.mappr.R;
 
 
 public class LoginPage extends ActionBarActivity implements View.OnClickListener {

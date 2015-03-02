@@ -1,4 +1,4 @@
-package com.example.priyanshu.mappr;
+package com.example.priyanshu.mappr.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.priyanshu.mappr.R;
+
 /**
  * Created by priyanshu-sekhar on 2/3/15.
  */
-public class BehvTrendsFragment extends Fragment {
+public class CompPerfFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

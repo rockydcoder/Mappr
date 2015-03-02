@@ -7,40 +7,38 @@
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity android:name=".LoginPage" >
+        <activity android:name=".Activities.LoginPage" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity" >
+        <activity android:name=".Activities.HomeActivity" >
         </activity>
         <activity
-            android:name=".SignUpStudent"
+            android:name=".Activities.SignUpStudent"
             android:label="@string/title_activity_sign_up_student" >
         </activity>
-        <activity android:name=".CommentPage" >
+        <activity android:name=".Activities.CommentPage" >
         </activity>
         <activity
-            android:name=".AcademicsActivity"
+            android:name=".Activities.AcademicsActivity"
             android:label="@string/title_activity_academics" >
         </activity>
         <activity
-            android:name=".ExCurActivity"
+            android:name=".Activities.ExCurActivity"
             android:label="@string/title_activity_ex_cur" >
         </activity>
         <activity
-            android:name=".BehaviourActivity"
+            android:name=".Activities.BehaviourActivity"
             android:label="@string/title_activity_behaviour" >
         </activity>
         <activity
-            android:name=".TrendsActivity"
+            android:name=".Activities.TrendsActivity"
             android:label="@string/title_activity_trends" >
         </activity>
-        <activity
-            android:name=".Behaviour" >
-        </activity>
+        
     </application>
 
 </manifest>

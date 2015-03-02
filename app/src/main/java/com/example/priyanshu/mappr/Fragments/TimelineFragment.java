@@ -26,12 +26,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.priyanshu.mappr.CardInfo;
-import com.example.priyanshu.mappr.CommentPage;
-import com.example.priyanshu.mappr.CustomAdapter;
-import com.example.priyanshu.mappr.MapprDatabaseAdapter;
+import com.example.priyanshu.mappr.Data.CardInfo;
+import com.example.priyanshu.mappr.Activities.CommentPage;
+import com.example.priyanshu.mappr.Adapters.CustomAdapter;
+import com.example.priyanshu.mappr.Adapters.MapprDatabaseAdapter;
 import com.example.priyanshu.mappr.R;
-import com.example.priyanshu.mappr.SingleRowData;
+import com.example.priyanshu.mappr.Data.SingleRowData;
 import com.software.shell.fab.ActionButton;
 
 import java.util.ArrayList;

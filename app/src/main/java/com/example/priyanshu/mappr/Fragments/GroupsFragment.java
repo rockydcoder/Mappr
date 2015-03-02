@@ -15,10 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.priyanshu.mappr.CustomAdapter;
-import com.example.priyanshu.mappr.MapprDatabaseAdapter;
+import com.example.priyanshu.mappr.Adapters.CustomAdapter;
+import com.example.priyanshu.mappr.Adapters.MapprDatabaseAdapter;
 import com.example.priyanshu.mappr.R;
-import com.example.priyanshu.mappr.SingleRowData;
+import com.example.priyanshu.mappr.Data.SingleRowData;
 import com.software.shell.fab.ActionButton;
 
 import java.util.ArrayList;

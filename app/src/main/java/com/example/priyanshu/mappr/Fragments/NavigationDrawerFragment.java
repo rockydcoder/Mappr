@@ -24,14 +24,14 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.priyanshu.mappr.AcademicsActivity;
-import com.example.priyanshu.mappr.Behaviour;
-import com.example.priyanshu.mappr.CustomAdapter;
-import com.example.priyanshu.mappr.ExCurActivity;
-import com.example.priyanshu.mappr.HomeActivity;
+import com.example.priyanshu.mappr.Activities.AcademicsActivity;
+import com.example.priyanshu.mappr.Activities.BehaviourActivity;
+import com.example.priyanshu.mappr.Adapters.CustomAdapter;
+import com.example.priyanshu.mappr.Activities.ExCurActivity;
+import com.example.priyanshu.mappr.Activities.HomeActivity;
 import com.example.priyanshu.mappr.R;
-import com.example.priyanshu.mappr.SingleRowData;
-import com.example.priyanshu.mappr.TrendsActivity;
+import com.example.priyanshu.mappr.Data.SingleRowData;
+import com.example.priyanshu.mappr.Activities.TrendsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -293,7 +293,7 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
                 break;
 
             case 3:
-                startActivity(new Intent(getActivity(), Behaviour.class));
+                startActivity(new Intent(getActivity(), BehaviourActivity.class));
                 break;
 
             case 4:

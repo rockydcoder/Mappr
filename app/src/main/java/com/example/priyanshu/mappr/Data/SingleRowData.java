@@ -1,4 +1,4 @@
-package com.example.priyanshu.mappr;
+package com.example.priyanshu.mappr.Data;
 
 /**
  * Created by Rakesh Sarangi on 11-Feb-15.

@@ -1,4 +1,4 @@
-package com.example.priyanshu.mappr;
+package com.example.priyanshu.mappr.Fragments;
 
 import android.support.v4.app.Fragment;
 

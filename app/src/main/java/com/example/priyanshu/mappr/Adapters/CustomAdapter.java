@@ -1,13 +1,15 @@
-package com.example.priyanshu.mappr;
+package com.example.priyanshu.mappr.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.priyanshu.mappr.R;
+import com.example.priyanshu.mappr.Data.SingleRowData;
 
 import java.util.Collections;
 import java.util.List;

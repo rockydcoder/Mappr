@@ -1,4 +1,4 @@
-package com.example.priyanshu.mappr;
+package com.example.priyanshu.mappr.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,7 +7,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.example.priyanshu.mappr.Adapters.CommentAdapter;
+import com.example.priyanshu.mappr.Data.CommentRow;
 import com.example.priyanshu.mappr.Fragments.TimelineFragment;
+import com.example.priyanshu.mappr.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

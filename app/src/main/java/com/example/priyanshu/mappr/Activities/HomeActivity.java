@@ -1,4 +1,4 @@
-package com.example.priyanshu.mappr;
+package com.example.priyanshu.mappr.Activities;
 
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -21,6 +21,7 @@ import com.example.priyanshu.mappr.Fragments.NavigationDrawerFragment;
 import com.example.priyanshu.mappr.Fragments.StudentsFragment;
 import com.example.priyanshu.mappr.Fragments.TeachersFragment;
 import com.example.priyanshu.mappr.Fragments.TimelineFragment;
+import com.example.priyanshu.mappr.R;
 import com.example.priyanshu.mappr.tabs.SlidingTabLayout;
 
 

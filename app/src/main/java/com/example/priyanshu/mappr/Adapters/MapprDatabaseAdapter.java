@@ -1,4 +1,4 @@
-package com.example.priyanshu.mappr;
+package com.example.priyanshu.mappr.Adapters;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,8 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.priyanshu.mappr.Data.Message;
+
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by rocky on 27/2/15.
@@ -63,7 +64,7 @@ public class MapprDatabaseAdapter {
             try {
                 db.execSQL(CREATE_TABLE);
             } catch (android.database.SQLException e) {
-                com.example.priyanshu.mappr.Message.message(context, "" + e);
+                Message.message(context, "" + e);
             }
 
 
@@ -75,7 +76,7 @@ public class MapprDatabaseAdapter {
                 db.execSQL(DROP_TABLE);
                 onCreate(db);
             } catch (android.database.SQLException e) {
-                com.example.priyanshu.mappr.Message.message(context, "" + e);
+                Message.message(context, "" + e);
             }
 
         }

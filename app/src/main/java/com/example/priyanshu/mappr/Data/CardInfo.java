@@ -1,4 +1,4 @@
-package com.example.priyanshu.mappr;
+package com.example.priyanshu.mappr.Data;
 
 import android.os.Parcel;
 import android.os.Parcelable;

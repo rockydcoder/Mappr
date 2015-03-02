@@ -44,8 +44,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         return data.size();
     }
 
-    public void setViewOnClickListener(ViewOnClickListener viewOnClickListener){
-        this.viewOnClickListener=viewOnClickListener;
+
+    public void setViewOnClickListener(final ViewOnClickListener viewOnClickListener) {
+        this.viewOnClickListener = viewOnClickListener;
+
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -55,7 +57,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         public MyViewHolder(View itemView) {
             super(itemView);
-
             itemView.setOnClickListener(this);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             ivLogo = (ImageView) itemView.findViewById(R.id.ivLogo);
@@ -64,12 +65,16 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         @Override
         public void onClick(View view) {
-            viewOnClickListener.onItemClick(view,getPosition());
+            if(viewOnClickListener!=null)
+               viewOnClickListener.onItemClick(view,getPosition());
         }
     }
 
     public interface ViewOnClickListener{
         public void onItemClick(View item,int position);
+
     }
+
+
 }
 

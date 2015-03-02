@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -22,16 +21,13 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.priyanshu.mappr.CardInfo;
 import com.example.priyanshu.mappr.CommentPage;
-import com.example.priyanshu.mappr.CommentRow;
 import com.example.priyanshu.mappr.CustomAdapter;
 import com.example.priyanshu.mappr.MapprDatabaseAdapter;
 import com.example.priyanshu.mappr.R;
@@ -40,7 +36,6 @@ import com.software.shell.fab.ActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import it.gmariotti.cardslib.library.internal.Card;

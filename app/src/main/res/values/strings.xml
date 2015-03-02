@@ -29,6 +29,18 @@
         <item>STUDENTS</item>
     </string-array>
 
+    <string-array name="behaviour_fragments_list">
+        <item>BADGES EARNED  </item>
+        <item>RECENT BADGES  </item>
+        <item>ANALYSIS</item>
+    </string-array>
+
+    <string-array name="acads_fragments_list">
+        <item>REPORT CARD</item>
+        <item>CLASS TEACHER VIEW</item>
+        <item>PERFORMANCE ANALYSIS</item>
+    </string-array>
+
     <string name="title_activity_sign_up_student">SignUpStudent</string>
 
     <string-array name="title_list">
@@ -38,5 +50,9 @@
         <item>Mrs.</item>
         <item>Dr.</item>
     </string-array>
+    <string name="title_activity_academics">AcademicsActivity</string>
+    <string name="title_activity_ex_cur">ExCurActivity</string>
+    <string name="title_activity_behaviour">BehaviourActivity</string>
+    <string name="title_activity_trends">TrendsActivity</string>
 
 </resources>

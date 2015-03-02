@@ -24,8 +24,7 @@ import com.example.priyanshu.mappr.Fragments.TimelineFragment;
 import com.example.priyanshu.mappr.tabs.SlidingTabLayout;
 
 
-public class HomePage extends ActionBarActivity {
-//        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class HomeActivity extends ActionBarActivity {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.

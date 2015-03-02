@@ -13,6 +13,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv_tab_title"
         android:textColor="#FFF"
-        android:layout_gravity="bottom|center"/>
+        android:singleLine="true"
+        android:layout_gravity="bottom|center"
+        android:layout_weight="1"
+        />
 
 </LinearLayout>

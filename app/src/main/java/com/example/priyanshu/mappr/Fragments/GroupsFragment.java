@@ -6,21 +6,19 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.priyanshu.mappr.CustomAdapter;
-import com.example.priyanshu.mappr.MapprDatabaseAdapter;
-import com.example.priyanshu.mappr.R;
-import com.example.priyanshu.mappr.SingleRowData;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.priyanshu.mappr.CustomAdapter;
+import com.example.priyanshu.mappr.MapprDatabaseAdapter;
+import com.example.priyanshu.mappr.R;
+import com.example.priyanshu.mappr.SingleRowData;
 import com.software.shell.fab.ActionButton;
 
 import java.util.ArrayList;

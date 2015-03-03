@@ -24,6 +24,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.+'
     compile 'com.android.support:recyclerview-v7:21.0.+'
     compile 'com.github.shell-software:fab:1.0.4'
+    compile 'com.github.traex.rippleeffect:library:1.2.3'
 
     //Optional for RecyclerView
     compile 'com.github.gabrielemariotti.cards:cardslib-recyclerview:2.0.1'

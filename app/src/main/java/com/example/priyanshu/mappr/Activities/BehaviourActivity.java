@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.priyanshu.mappr.Fragments.BadgesEarnedFragment;
+import com.example.priyanshu.mappr.Fragments.BestPerfFragment;
 import com.example.priyanshu.mappr.Fragments.CTViewFragment;
 import com.example.priyanshu.mappr.Fragments.GroupsFragment;
 import com.example.priyanshu.mappr.Fragments.NavigationDrawerFragment;
@@ -221,7 +223,7 @@ public class BehaviourActivity extends ActionBarActivity{
         public Fragment getItem(int position) {
             switch(position) {
                 case 0:
-                    return new ReportCardFragment();
+                    return new BadgesEarnedFragment();
                 case 1:
                     return new CTViewFragment();
                 case 2:

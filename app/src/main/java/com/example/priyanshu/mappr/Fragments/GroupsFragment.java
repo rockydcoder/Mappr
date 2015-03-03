@@ -17,8 +17,8 @@ import android.widget.Toast;
 
 import com.example.priyanshu.mappr.Adapters.CustomAdapter;
 import com.example.priyanshu.mappr.Adapters.MapprDatabaseAdapter;
-import com.example.priyanshu.mappr.R;
 import com.example.priyanshu.mappr.Data.SingleRowData;
+import com.example.priyanshu.mappr.R;
 import com.software.shell.fab.ActionButton;
 
 import java.util.ArrayList;

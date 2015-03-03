@@ -26,12 +26,12 @@ import android.widget.Toast;
 
 import com.example.priyanshu.mappr.Activities.AcademicsActivity;
 import com.example.priyanshu.mappr.Activities.BehaviourActivity;
-import com.example.priyanshu.mappr.Adapters.CustomAdapter;
 import com.example.priyanshu.mappr.Activities.ExCurActivity;
 import com.example.priyanshu.mappr.Activities.HomeActivity;
-import com.example.priyanshu.mappr.R;
-import com.example.priyanshu.mappr.Data.SingleRowData;
 import com.example.priyanshu.mappr.Activities.TrendsActivity;
+import com.example.priyanshu.mappr.Adapters.CustomAdapter;
+import com.example.priyanshu.mappr.Data.SingleRowData;
+import com.example.priyanshu.mappr.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,8 +116,10 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
         customAdapter.setViewOnClickListener(this);
         mRecyclerView.setAdapter(customAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         return mDrawerView;
     }
+
 
     public static List<SingleRowData> getData() {
         List<SingleRowData> data = new ArrayList<>();

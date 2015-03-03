@@ -26,4 +26,14 @@ public class BadgesEarned {
     }
 
     private String badgeName;
+
+    public String getBadgeAssigned() {
+        return badgeAssigned;
+    }
+
+    public void setBadgeAssigned(String badgeAssigned) {
+        this.badgeAssigned = badgeAssigned;
+    }
+
+    private String badgeAssigned;
 }

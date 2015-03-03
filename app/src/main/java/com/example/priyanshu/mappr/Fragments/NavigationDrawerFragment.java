@@ -23,7 +23,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.example.priyanshu.mappr.Activities.AcademicsActivity;
 import com.example.priyanshu.mappr.Activities.BehaviourActivity;
 import com.example.priyanshu.mappr.Activities.ExCurActivity;
@@ -32,7 +31,6 @@ import com.example.priyanshu.mappr.Activities.TrendsActivity;
 import com.example.priyanshu.mappr.Adapters.CustomAdapter;
 import com.example.priyanshu.mappr.Data.SingleRowData;
 import com.example.priyanshu.mappr.R;
-
 import java.util.ArrayList;
 import java.util.List;
 

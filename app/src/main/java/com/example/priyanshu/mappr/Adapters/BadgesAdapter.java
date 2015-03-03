@@ -37,7 +37,8 @@ public class BadgesAdapter extends RecyclerView.Adapter<BadgesAdapter.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder viewHolder, int i) {
         BadgesEarned badge = data.get(i);
-        viewHolder.badge.setImageDrawable(badge.getBadge());
+        viewHolder.badgeAssigned.setBackground(badge.getBadge());
+        viewHolder.badgeAssigned.setText(badge.getBadgeAssigned());
         viewHolder.badgeName.setText(badge.getBadgeName());
     }
 
@@ -54,14 +55,14 @@ public class BadgesAdapter extends RecyclerView.Adapter<BadgesAdapter.MyViewHold
 
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView badge;
         private TextView  badgeName;
+        private TextView badgeAssigned;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             badgeName = (TextView) itemView.findViewById(R.id.badgeName);
-            badge = (ImageView) itemView.findViewById(R.id.badge);
+            badgeAssigned = (TextView) itemView.findViewById(R.id.badgeAssigned);
         }
 
         @Override

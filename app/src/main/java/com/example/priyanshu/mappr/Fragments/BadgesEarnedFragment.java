@@ -52,6 +52,8 @@ public class BadgesEarnedFragment extends Fragment{
                 "Participation","Respect","Talks",
                 "Untidy"
         };
+
+        int badgeCount=1;
         int[] badges={R.drawable.aggressive,R.drawable.attentive,R.drawable.banned_items,
                 R.drawable.creative,R.drawable.disrespect,R.drawable.wellgroomed,
                 R.drawable.foul_lang,R.drawable.hardwork,R.drawable.helping,
@@ -63,6 +65,7 @@ public class BadgesEarnedFragment extends Fragment{
             BadgesEarned badge = new BadgesEarned();
             badge.setBadge(view.getResources().getDrawable(badges[i]));
             badge.setBadgeName(titles[i]);
+            badge.setBadgeAssigned("x"+badgeCount);
             data.add(badge);
         }
 

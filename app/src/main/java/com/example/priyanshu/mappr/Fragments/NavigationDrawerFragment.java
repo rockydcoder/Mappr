@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +34,7 @@ import com.example.priyanshu.mappr.Adapters.CustomAdapter;
 import com.example.priyanshu.mappr.Data.SingleRowData;
 import com.example.priyanshu.mappr.R;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -55,34 +58,33 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
 
     /**
-     * A pointer to the current callbacks instance (the Activity).
-     */
-//    private NavigationDrawerCallbacks mCallbacks;
-
-    /**
      * Helper component that ties the action bar to the navigation drawer.
      */
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
-    private ListView mDrawerListView;
     private View mDrawerView;
     private View mFragmentContainerView;
 
-    private int mCurrentSelectedPosition = 0;
+    private static int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
     private CustomAdapter customAdapter;
     private RecyclerView mRecyclerView;
     private static String[] titles;
+    private static int position = 0;
 
     public NavigationDrawerFragment() {
     }
 
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
@@ -92,9 +94,11 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
         if (savedInstanceState != null) {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
             mFromSavedInstanceState = true;
+
         }
 
         titles = getResources().getStringArray(R.array.navigation_drawer_list);
+        Log.d("onCreate", "onCreate");
     }
 
     @Override
@@ -102,6 +106,7 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
         super.onActivityCreated(savedInstanceState);
         // Indicate that this fragment would like to influence the set of actions in the action bar.
         setHasOptionsMenu(true);
+        Log.d("onActivityCreated", "onActivityCreated");
 
     }
 
@@ -114,18 +119,22 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
         customAdapter.setViewOnClickListener(this);
         mRecyclerView.setAdapter(customAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        Log.d("onCreateView", "onCreateView");
         return mDrawerView;
     }
 
 
-    public static List<SingleRowData> getData() {
+    public  List<SingleRowData> getData() {
         List<SingleRowData> data = new ArrayList<>();
         int[] icons = {R.drawable.home, R.drawable.grad_cap, R.drawable.trophy, R.drawable.magnify, R.drawable.trends};
         for(int i = 0; i < titles.length; i++) {
             SingleRowData current = new SingleRowData();
             current.setIconId(icons[i]);
             current.setText(titles[i]);
+            if(i == position)
+                current.setRowBg(getResources().getColor(R.color.colorHighlight));
+            else
+                current.setRowBg(getResources().getColor(R.color.normal_bg));
             data.add(current);
         }
 
@@ -275,6 +284,7 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
     // overriden method of interface
     @Override
     public void onItemClick(View view, int position) {
+        this.position = position;
         switch (position) {
 
             case 0:

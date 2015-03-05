@@ -30,6 +30,7 @@ public class AcademicsActivity extends ActionBarActivity {
     private ViewPager mPager;
     private SlidingTabLayout mTabs;
     private final int COUNT_OF_TABS = 3;
+    private final int POSITION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

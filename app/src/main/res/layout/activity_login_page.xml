@@ -134,7 +134,7 @@
         android:layout_height="wrap_content"
         android:text="Sign up for free"
         android:textColor="#CCC"
-        android:id="@+id/singup"
+        android:id="@+id/signup"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="6dp"

@@ -1,11 +1,14 @@
 package com.example.priyanshu.mappr.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.priyanshu.mappr.R;
@@ -39,6 +42,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         SingleRowData current = data.get(i);
         viewHolder.tvTitle.setText(current.getText());
         viewHolder.ivLogo.setImageResource(current.getIconId());
+        viewHolder.rlRow.setBackgroundColor(current.getRowBg());
     }
 
     @Override
@@ -56,6 +60,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvTitle;
         private ImageView ivLogo, ivArrow;
+        private RelativeLayout rlRow;
 
 
         public MyViewHolder(View itemView) {
@@ -64,6 +69,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             ivLogo = (ImageView) itemView.findViewById(R.id.ivLogo);
             ivArrow = (ImageView) itemView.findViewById(R.id.ivArrow);
+            rlRow = (RelativeLayout) itemView.findViewById(R.id.rlRow);
         }
 
         @Override
@@ -73,6 +79,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         }
     }
 
+    /**
+     * For callback to any class to get the position of the item clicked
+     */
     public interface ViewOnClickListener{
         public void onItemClick(View item,int position);
 

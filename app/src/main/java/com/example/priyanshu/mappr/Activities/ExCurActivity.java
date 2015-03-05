@@ -1,19 +1,44 @@
 package com.example.priyanshu.mappr.Activities;
 
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
+import com.example.priyanshu.mappr.Fragments.NavigationDrawerFragment;
 import com.example.priyanshu.mappr.R;
 
 
 public class ExCurActivity extends ActionBarActivity {
 
+    /**
+     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
+     */
+    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ex_cur);
+
+        // Set a toolbar to replace the action bar.
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ImageView user=(ImageView)findViewById(R.id.loggedUser);
+        user.setImageResource(R.drawable.student);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+
+        // Set up the drawer.
+        mNavigationDrawerFragment.setUp(
+                R.id.navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
     }
 
 

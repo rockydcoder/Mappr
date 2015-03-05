@@ -33,6 +33,7 @@ public class HomeActivity extends ActionBarActivity {
     private SlidingTabLayout mTabs;
     private final int COUNT_OF_TABS = 4;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,7 @@ public class HomeActivity extends ActionBarActivity {
         user.setImageResource(R.drawable.student);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);

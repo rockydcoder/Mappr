@@ -8,14 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.priyanshu.mappr.Adapters.CommentAdapter;
+import com.example.priyanshu.mappr.Adapters.RecentBadgesAdapter;
 import com.example.priyanshu.mappr.Data.BadgesEarned;
 import com.example.priyanshu.mappr.Data.CommentRow;
 import com.example.priyanshu.mappr.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,7 +21,7 @@ import java.util.List;
  */
 public class RecentBadgesFragment extends Fragment {
     RecyclerView mRecyclerView;
-    CommentAdapter commentAdapter;
+    RecentBadgesAdapter recentBadgesAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +32,8 @@ public class RecentBadgesFragment extends Fragment {
         View layout= inflater.inflate(R.layout.layout_recent_badges,container,false);
         mRecyclerView = (RecyclerView)layout.findViewById(R.id.recent_badge_list);
         mRecyclerView.setPadding(20,20,20,40);
-        commentAdapter = new CommentAdapter(getActivity(), getData(layout));
-        mRecyclerView.setAdapter(commentAdapter);
+        recentBadgesAdapter = new RecentBadgesAdapter(getActivity(), getData(layout));
+        mRecyclerView.setAdapter(recentBadgesAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(layout.getContext()));
         return layout;
 

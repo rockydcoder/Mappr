@@ -53,8 +53,8 @@ public class BadgesEarnedFragment extends Fragment{
 
         int[] badgeCount={0,0,0,
                 1,2,3,
-                0,0,0,
-                0,0,0,
+                0,5,0,
+                6,0,2,
                 0,0,0,
                 4
         };

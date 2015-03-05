@@ -8,11 +8,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Badge"
+        android:text="Well Groomed Idiot"
         android:textSize="18dp"
         android:layout_marginLeft="100dp"
         android:id="@+id/badgeTitle"
-        android:paddingBottom="-10dp"
         android:textColor="#000"
 
         />
@@ -21,11 +20,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/badgePercentage"
-        android:text="%"
+        android:text="999%"
         android:textSize="18sp"
-        android:paddingBottom="-10dp"
         android:layout_marginRight="80dp"
         android:layout_alignParentRight="true"
-        />
+        android:layout_alignBottom="@+id/badgeTitle"
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>

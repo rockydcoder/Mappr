@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.priyanshu.mappr.Activities.AcademicsActivity;
 import com.example.priyanshu.mappr.Activities.BehaviourActivity;
@@ -34,8 +35,8 @@ import com.example.priyanshu.mappr.Adapters.CustomAdapter;
 import com.example.priyanshu.mappr.Data.SingleRowData;
 import com.example.priyanshu.mappr.R;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import static com.example.priyanshu.mappr.Activities.LoginPage.name;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -65,6 +66,7 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
     private DrawerLayout mDrawerLayout;
     private View mDrawerView;
     private View mFragmentContainerView;
+    private TextView tvUsername;
 
     private static int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
@@ -73,6 +75,7 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
     private RecyclerView mRecyclerView;
     private static String[] titles;
     private static int position = 0;
+    private static String userName;
 
     public NavigationDrawerFragment() {
     }
@@ -80,9 +83,12 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
 
 
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userName = name;
 
 
 
@@ -98,7 +104,6 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
         }
 
         titles = getResources().getStringArray(R.array.navigation_drawer_list);
-        Log.d("onCreate", "onCreate");
     }
 
     @Override
@@ -106,7 +111,6 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
         super.onActivityCreated(savedInstanceState);
         // Indicate that this fragment would like to influence the set of actions in the action bar.
         setHasOptionsMenu(true);
-        Log.d("onActivityCreated", "onActivityCreated");
 
     }
 
@@ -114,12 +118,13 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mDrawerView = inflater.inflate(R.layout.fragment_navigation_drawer, container);
+        tvUsername = (TextView) mDrawerView.findViewById(R.id.nav_username);
+        tvUsername.setText(userName);
         mRecyclerView = (RecyclerView) mDrawerView.findViewById(R.id.drawer_list);
         customAdapter = new CustomAdapter(getActivity(), getData());
         customAdapter.setViewOnClickListener(this);
         mRecyclerView.setAdapter(customAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        Log.d("onCreateView", "onCreateView");
         return mDrawerView;
     }
 

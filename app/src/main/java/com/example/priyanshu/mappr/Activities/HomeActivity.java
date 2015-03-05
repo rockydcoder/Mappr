@@ -37,6 +37,7 @@ public class HomeActivity extends ActionBarActivity {
     private SlidingTabLayout mTabs;
     private final int COUNT_OF_TABS = 4;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

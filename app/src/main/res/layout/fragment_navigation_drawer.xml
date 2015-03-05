@@ -13,7 +13,7 @@
         android:id="@+id/container_profile"
         android:layout_width="match_parent"
         android:layout_height="96dp"
-        android:background="#000">
+        android:background="@drawable/drawer_border">
 
 
         <ImageView
@@ -24,10 +24,10 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:paddingLeft="16dp"
-            android:src="@drawable/logo" />
+            android:background="@drawable/soham" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/nav_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/imageView4"
@@ -38,10 +38,10 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/nav_edit_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView2"
+            android:layout_below="@+id/nav_username"
             android:layout_toEndOf="@+id/imageView4"
             android:layout_toRightOf="@+id/imageView4"
             android:paddingLeft="16dp"

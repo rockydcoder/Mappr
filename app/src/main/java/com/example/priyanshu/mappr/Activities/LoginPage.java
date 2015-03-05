@@ -1,9 +1,11 @@
 package com.example.priyanshu.mappr.Activities;
 
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,8 +13,21 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.*;
 import com.example.priyanshu.mappr.R;
+import com.example.priyanshu.mappr.network.VolleySingleton;
+import static com.example.priyanshu.mappr.Extras.Keys.LogIn.*;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class LoginPage extends ActionBarActivity implements View.OnClickListener {
@@ -21,6 +36,9 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
     private EditText passWord;
     private CheckBox rememberPassword;
     private Button login, signup;
+    private String username = null;
+    private String password = null;
+    public static String name;
 
 
 
@@ -33,6 +51,8 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
 
         login.setOnClickListener(this);
         signup.setOnClickListener(this);
+
+
 
     }
 
@@ -65,7 +85,7 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
         passWord = (EditText)findViewById(R.id.passWord);
         rememberPassword = (CheckBox)findViewById(R.id.remember);
         login = (Button)findViewById(R.id.login);
-        signup = (Button) findViewById(R.id.singup);
+        signup = (Button) findViewById(R.id.signup);
 
     }
 
@@ -73,11 +93,60 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.login:
-                Intent intent = new Intent(LoginPage.this, HomeActivity.class);
-                startActivity(intent);
+
+                if(isEmpty(userName))
+                    Toast.makeText(LoginPage.this, "Username is empty!", Toast.LENGTH_LONG).show();
+
+                else if(isEmpty(passWord))
+                    Toast.makeText(LoginPage.this, "Password is empty!", Toast.LENGTH_LONG).show();
+
+                else {
+
+                    username = userName.getText().toString().trim();
+                    password = passWord.getText().toString().trim();
+
+
+                    RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
+                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
+                            getRequestUrl(username, password),
+                            null,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        String firstName = response.getString(KEY_FIRST_NAME);
+                                        String middleName = response.getString(KEY_MIDDLE_NAME);
+                                        String lastName = response.getString(KEY_LAST_NAME);
+
+                                        name = firstName + " " + middleName + " " + lastName;
+
+                                        Intent intent = new Intent(LoginPage.this, HomeActivity.class);
+                                        startActivity(intent);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.d("error", error.getMessage());
+
+                                }
+                            }
+                            );
+
+
+                    requestQueue.add(request);
+
+
+
+                }
+
                 break;
 
-            case R.id.singup:
+            case R.id.signup:
                 final Dialog dialog = new Dialog(this);
                 Button student, teacher, parent;
 
@@ -116,4 +185,27 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
         }
 
     }
+
+    private boolean isEmpty(EditText etText) {
+        return etText.getText().toString().trim().length() == 0;
+    }
+
+    private String getRequestUrl(String username, String password) {
+        return URL_LOG_IN+
+                URL_CHAR_QUESTION+
+                URL_REQUEST_TYPE+
+                URL_CHAR_EQUAL+
+                "student_login"+
+                URL_CHAR_AMPERSAND+
+                URL_USERNAME+
+                URL_CHAR_EQUAL+
+                username+
+                URL_CHAR_AMPERSAND+
+                URL_PASSWORD+
+                URL_CHAR_EQUAL+
+                password;
+
+    }
+
+
 }

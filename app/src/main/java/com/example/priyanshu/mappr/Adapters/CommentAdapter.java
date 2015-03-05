@@ -3,6 +3,7 @@ package com.example.priyanshu.mappr.Adapters;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,11 +38,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
     @Override
     public void onBindViewHolder(MyViewHolder viewHolder, int i) {
         CommentRow current = data.get(i);
-        viewHolder.userName.setText(current.userName);
-        viewHolder.userComment.setText(current.userComment);
+        viewHolder.userName.setText(Html.fromHtml(current.userName));
+        viewHolder.userComment.setText(Html.fromHtml(current.userComment));
 
         Resources res=context.getResources();
-        viewHolder.userPic.setImageResource(R.drawable.me);
+        viewHolder.userPic.setImageResource(R.drawable.soham);
     }
 
     @Override

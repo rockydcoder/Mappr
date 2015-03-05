@@ -36,4 +36,7 @@ public class BadgesEarned {
     }
 
     private String badgeAssigned;
+    public int badgeCount;
+    public boolean positiveBadge;
+    public float badgePercentage;
 }

@@ -70,8 +70,13 @@ public class TimelineFragment extends Fragment{
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
 
+    private ArrayList<Integer> wallList = new ArrayList<>();
+
     AutoCompleteTextView group;
     Dialog dialog;
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

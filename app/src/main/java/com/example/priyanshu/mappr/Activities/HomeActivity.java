@@ -25,6 +25,8 @@ import com.example.priyanshu.mappr.Fragments.TimelineFragment;
 import com.example.priyanshu.mappr.R;
 import com.example.priyanshu.mappr.tabs.SlidingTabLayout;
 
+import java.util.ArrayList;
+
 
 public class HomeActivity extends ActionBarActivity {
 
@@ -36,12 +38,18 @@ public class HomeActivity extends ActionBarActivity {
     private ViewPager mPager;
     private SlidingTabLayout mTabs;
     private final int COUNT_OF_TABS = 4;
+    public ArrayList<String> groupTitles = new ArrayList<>();
+    public ArrayList<String> classMatesNames = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        Bundle bundle = getIntent().getExtras();
+        groupTitles = bundle.getStringArrayList("groupTitles");
+        classMatesNames = bundle.getStringArrayList("matesNames");
 
         // Set a toolbar to replace the action bar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -118,11 +126,11 @@ public class HomeActivity extends ActionBarActivity {
                 case 0:
                     return new TimelineFragment();
                 case 1:
-                    return new GroupsFragment();
+                    return new GroupsFragment(groupTitles);
                 case 2:
                     return new TeachersFragment();
                 case 3:
-                    return new StudentsFragment();
+                    return new StudentsFragment(classMatesNames);
             }
 
             return null;

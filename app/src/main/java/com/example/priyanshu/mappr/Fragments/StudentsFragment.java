@@ -24,6 +24,13 @@ public class StudentsFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private CustomAdapter customAdapter;
+    private static boolean check = true;
+    private static List<SingleRowData> data = new ArrayList<>();
+    private static ArrayList<String> classMatesNames = new ArrayList<>();
+
+    public StudentsFragment(ArrayList<String> names) {
+        classMatesNames = names;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,15 +49,16 @@ public class StudentsFragment extends Fragment {
     }
 
     public static List<SingleRowData> getData() {
-        List<SingleRowData> data = new ArrayList<>();
-        String[] titles = {"Student 1", "Student 2", "Student 3", "Student 4", "Student 5"};
-        for(int i = 0; i < titles.length; i++) {
-            SingleRowData current = new SingleRowData();
-            current.setIconId(R.drawable.user);
-            current.setText(titles[i]);
-            data.add(current);
-        }
+        if(check) {
+            check = false;
 
+            for(int i = 0; i < classMatesNames.size(); i++) {
+                SingleRowData current = new SingleRowData();
+                current.setIconId(R.drawable.user);
+                current.setText(classMatesNames.get(i));
+                data.add(current);
+            }
+        }
         return data;
 
     }

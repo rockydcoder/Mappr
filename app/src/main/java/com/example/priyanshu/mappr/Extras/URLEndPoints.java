@@ -12,5 +12,12 @@ public class URLEndPoints {
     public static final String URL_REQUEST_TYPE = "request_type";
     public static final String URL_USERNAME = "userid";
     public static final String URL_PASSWORD = "password";
+    public static final String URL_GROUP_ID = "groupid";
+    public static final String URL_STUDENT_ID = "studentid";
+    public static final String URL_TEACHER_ID = "teacherid";
+    public static final String URL_TYPE_GROUP_TITLE = "get_this_group_title";
+    public static final String URL_TYPE_TEACHER_NAME = "get_this_teacher_name";
+    public static final String URL_TYPE_STUDENT_NAME = "get_this_student_name";
+
 
 }

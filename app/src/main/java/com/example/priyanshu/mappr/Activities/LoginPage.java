@@ -1,7 +1,7 @@
 package com.example.priyanshu.mappr.Activities;
 
 import android.app.Dialog;
-import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -20,7 +20,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
+
 import static com.example.priyanshu.mappr.Extras.URLEndPoints.*;
 import com.example.priyanshu.mappr.R;
 import com.example.priyanshu.mappr.network.VolleySingleton;
@@ -28,6 +28,8 @@ import static com.example.priyanshu.mappr.Extras.Keys.LogIn.*;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 public class LoginPage extends ActionBarActivity implements View.OnClickListener {
@@ -39,8 +41,16 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
     private String username = null;
     private String password = null;
     public static String name;
+    public ArrayList<Integer> groupsList = new ArrayList<>();
+    public ArrayList<Integer> wallList = new ArrayList<>();
+    public ArrayList<Integer> classmatesList = new ArrayList<>();
+    public ArrayList<String> groupsTitles = new ArrayList<>();
+    public ArrayList<String> classmatesNames = new ArrayList<>();
+    public ArrayList<String> teachersNames = new ArrayList<>();
+    final RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
+    private ProgressDialog dialog;
 
-
+    static int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +61,6 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
 
         login.setOnClickListener(this);
         signup.setOnClickListener(this);
-
-
-
     }
 
 
@@ -105,8 +112,6 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
                     username = userName.getText().toString().trim();
                     password = passWord.getText().toString().trim();
 
-
-                    RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
                     JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
                             getRequestUrl(username, password),
                             null,
@@ -117,11 +122,21 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
                                         String firstName = response.getString(KEY_FIRST_NAME);
                                         String middleName = response.getString(KEY_MIDDLE_NAME);
                                         String lastName = response.getString(KEY_LAST_NAME);
+                                        String allGroups = response.getString(KEY_GROUPS_LIST);
+                                        String allPosts = response.getString(KEY_WALL_LIST);
+                                        String allMates = response.getString(KEY_CLASSMATES_LIST);
 
+                                        extractGroupIDs(allGroups);
+                                        extractClassMateIDs(allMates);
+                                        extractPostIDs(allPosts);
                                         name = firstName + " " + middleName + " " + lastName;
+                                        dialog  = new ProgressDialog(LoginPage.this);
+                                        dialog.setMessage("Downloading info");
+                                        dialog.show();
+//                                        new GetData().execute();
+                                        extractGroupTitles();
+                                        extractMatesNames();
 
-                                        Intent intent = new Intent(LoginPage.this, HomeActivity.class);
-                                        startActivity(intent);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -131,16 +146,12 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Log.d("error", error.getMessage());
+                                    Log.d("error", "ERROR!");
 
                                 }
                             }
                             );
-
-
                     requestQueue.add(request);
-
-
 
                 }
 
@@ -186,6 +197,65 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
 
     }
 
+    private void extractPostIDs(String allPosts) {
+        String[] array = allPosts.split(",");
+        for(String s: array)
+            wallList.add(Integer.parseInt(s));
+
+    }
+
+    private void extractClassMateIDs(String allMates) {
+        String[] array = allMates.split(",");
+        for(String s: array)
+            classmatesList.add(Integer.parseInt(s));
+
+
+    }
+
+    private void extractGroupIDs(String allGroups) {
+        String[] array = allGroups.split(",");
+        for(String s: array)
+            groupsList.add(Integer.parseInt(s));
+    }
+
+    private String getGroupTitleRequestUrl(Integer integer) {
+        return URL_LOG_IN+
+                URL_CHAR_QUESTION+
+                URL_REQUEST_TYPE+
+                URL_CHAR_EQUAL+
+                URL_TYPE_GROUP_TITLE+
+                URL_CHAR_AMPERSAND+
+                URL_GROUP_ID+
+                URL_CHAR_EQUAL+
+                integer.toString();
+    }
+
+    private String getMateNameRequestUrl(Integer integer) {
+        return URL_LOG_IN+
+                URL_CHAR_QUESTION+
+                URL_REQUEST_TYPE+
+                URL_CHAR_EQUAL+
+                URL_TYPE_STUDENT_NAME+
+                URL_CHAR_AMPERSAND+
+                URL_STUDENT_ID+
+                URL_CHAR_EQUAL+
+                integer.toString();
+    }
+
+    private String getTeacherNameRequestUrl(Integer integer) {
+        return URL_LOG_IN+
+                URL_CHAR_QUESTION+
+                URL_REQUEST_TYPE+
+                URL_CHAR_EQUAL+
+                URL_TYPE_TEACHER_NAME+
+                URL_CHAR_AMPERSAND+
+                URL_TEACHER_ID+
+                URL_CHAR_EQUAL+
+                integer.toString();
+    }
+
+
+
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
     }
@@ -206,6 +276,151 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
                 password;
 
     }
+
+    private void extractGroupTitles() {
+        JsonObjectRequest groupRequest;
+        for(i = 0; i < groupsList.size(); i++) {
+            groupRequest = new JsonObjectRequest(Request.Method.GET,
+                    getGroupTitleRequestUrl(groupsList.get(i)),
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                String currentTitle = response.getString(KEY_GROUPS_TITLE);
+
+                                    groupsTitles.add(currentTitle);
+
+//                                if(groupsTitles.size() == groupsList.size()) {
+//                                    dialog.dismiss();
+//                                    changeActivity();
+//
+//                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+
+
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("error", error.getMessage());
+
+                        }
+                    });
+
+            requestQueue.add(groupRequest);
+
+        }
+    }
+
+    private void extractMatesNames() {
+
+        JsonObjectRequest groupRequest;
+        for(i = 0; i < classmatesList.size(); i++) {
+            groupRequest = new JsonObjectRequest(Request.Method.GET,
+                    getMateNameRequestUrl(classmatesList.get(i)),
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                String currentTitle = response.getString(KEY_STUDENT_NAME);
+
+                                classmatesNames.add(currentTitle);
+
+                                if(classmatesList.size() == classmatesNames.size()) {
+                                    Log.d("dialog", "dismiss");
+                                    dialog.dismiss();
+                                    changeActivity();
+
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+
+
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("error", "Classmate volley error");
+
+                        }
+                    });
+
+            requestQueue.add(groupRequest);
+
+        }
+
+    }
+
+    private void extractTeachersNames() {
+
+        JsonObjectRequest groupRequest;
+        for(i = 0; i < classmatesList.size(); i++) {
+            groupRequest = new JsonObjectRequest(Request.Method.GET,
+                    getMateNameRequestUrl(classmatesList.get(i)),
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                String currentTitle = response.getString(KEY_STUDENT_NAME);
+
+                                classmatesNames.add(currentTitle);
+
+//                                if(classmatesList.size() == classmatesNames.size()) {
+//                                    Log.d("dialog", "dismiss");
+//                                    dialog.dismiss();
+//                                    changeActivity();
+//
+//                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+
+
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("error", error.getMessage());
+
+                        }
+                    });
+
+            requestQueue.add(groupRequest);
+
+        }
+
+    }
+
+    private void changeActivity() {
+
+        Intent intent = new Intent(LoginPage.this, HomeActivity.class);
+        intent.putStringArrayListExtra("groupTitles", groupsTitles);
+        intent.putStringArrayListExtra("matesNames", classmatesNames);
+        startActivity(intent);
+    }
+
+
 
 
 }

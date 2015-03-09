@@ -26,7 +26,7 @@
         <item>TIMELINE</item>
         <item>GROUPS</item>
         <item>TEACHERS</item>
-        <item>STUDENTS</item>
+        <item>CLASSMATES</item>
     </string-array>
 
     <string-array name="behaviour_fragments_list">

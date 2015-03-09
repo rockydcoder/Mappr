@@ -23,7 +23,7 @@ public class ReportCardFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.layout_report_card, container, false);
+        View layout = inflater.inflate(R.layout.badge_table_row, container, false);
 
         return layout;
     }

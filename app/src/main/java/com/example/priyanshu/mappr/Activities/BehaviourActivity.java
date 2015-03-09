@@ -14,15 +14,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.priyanshu.mappr.Fragments.BadgesEarnedFragment;
-import com.example.priyanshu.mappr.Fragments.BestPerfFragment;
-import com.example.priyanshu.mappr.Fragments.CTViewFragment;
-import com.example.priyanshu.mappr.Fragments.GroupsFragment;
 import com.example.priyanshu.mappr.Fragments.NavigationDrawerFragment;
 import com.example.priyanshu.mappr.Fragments.PerfAnalFragment;
-import com.example.priyanshu.mappr.Fragments.ReportCardFragment;
-import com.example.priyanshu.mappr.Fragments.StudentsFragment;
-import com.example.priyanshu.mappr.Fragments.TeachersFragment;
-import com.example.priyanshu.mappr.Fragments.TimelineFragment;
+import com.example.priyanshu.mappr.Fragments.RecentBadgesFragment;
 import com.example.priyanshu.mappr.R;
 import com.example.priyanshu.mappr.tabs.SlidingTabLayout;
 
@@ -116,7 +110,7 @@ public class BehaviourActivity extends ActionBarActivity{
                 case 0:
                     return new BadgesEarnedFragment();
                 case 1:
-                    return new CTViewFragment();
+                    return new RecentBadgesFragment();
                 case 2:
                     return new PerfAnalFragment();
             }

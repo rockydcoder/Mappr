@@ -1,26 +1,22 @@
 package com.example.priyanshu.mappr.Activities;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.priyanshu.mappr.Fragments.CTViewFragment;
-import com.example.priyanshu.mappr.Fragments.GroupsFragment;
+import com.example.priyanshu.mappr.Fragments.BadgesEarnedFragment;
 import com.example.priyanshu.mappr.Fragments.NavigationDrawerFragment;
 import com.example.priyanshu.mappr.Fragments.PerfAnalFragment;
 import com.example.priyanshu.mappr.Fragments.ReportCardFragment;
-import com.example.priyanshu.mappr.Fragments.StudentsFragment;
-import com.example.priyanshu.mappr.Fragments.TeachersFragment;
-import com.example.priyanshu.mappr.Fragments.TimelineFragment;
 import com.example.priyanshu.mappr.R;
 import com.example.priyanshu.mappr.tabs.SlidingTabLayout;
 
@@ -114,7 +110,7 @@ public class AcademicsActivity extends ActionBarActivity {
                 case 0:
                     return new ReportCardFragment();
                 case 1:
-                    return new CTViewFragment();
+                    return new BadgesEarnedFragment();
                 case 2:
                     return new PerfAnalFragment();
             }

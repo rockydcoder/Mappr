@@ -1,20 +1,18 @@
 package com.example.priyanshu.mappr.Fragments;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.priyanshu.mappr.Adapters.BadgesAdapter;
 import com.example.priyanshu.mappr.Data.BadgesEarned;
 import com.example.priyanshu.mappr.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +51,13 @@ public class BadgesEarnedFragment extends Fragment{
                 "Untidy"
         };
 
-        int badgeCount=1;
+        int[] badgeCount={0,0,0,
+                1,2,3,
+                0,5,0,
+                6,0,2,
+                0,0,0,
+                4
+        };
         int[] badges={R.drawable.aggressive,R.drawable.attentive,R.drawable.banned_items,
                 R.drawable.creative,R.drawable.disrespect,R.drawable.wellgroomed,
                 R.drawable.foul_lang,R.drawable.hardwork,R.drawable.helping,
@@ -61,11 +65,24 @@ public class BadgesEarnedFragment extends Fragment{
                 R.drawable.participation,R.drawable.respect,R.drawable.talks,
                 R.drawable.untidy
         };
+
+        boolean[] positiveBadge={
+                false,true,false,
+                true,false,true,
+                false,true,true,
+                false,true,false,
+                true,true,false,
+                false
+        };
+
         for(int i = 0; i < titles.length; i++) {
             BadgesEarned badge = new BadgesEarned();
             badge.setBadge(view.getResources().getDrawable(badges[i]));
             badge.setBadgeName(titles[i]);
-            badge.setBadgeAssigned("x"+badgeCount);
+            badge.setBadgeAssigned("x"+badgeCount[i]);
+            badge.badgeCount=badgeCount[i];
+            badge.positiveBadge=positiveBadge[i];
+            if(badge.badgeCount!=0)
             data.add(badge);
         }
 

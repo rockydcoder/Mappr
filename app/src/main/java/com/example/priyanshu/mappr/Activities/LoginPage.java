@@ -24,12 +24,12 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import static com.example.priyanshu.mappr.Extras.URLEndPoints.*;
 import com.example.priyanshu.mappr.R;
 import com.example.priyanshu.mappr.network.VolleySingleton;
-import static com.example.priyanshu.mappr.Extras.Keys.LogIn.*;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
+import static com.example.priyanshu.mappr.Extras.Keys.LogIn.*;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.*;
 
 
 public class LoginPage extends ActionBarActivity implements View.OnClickListener {

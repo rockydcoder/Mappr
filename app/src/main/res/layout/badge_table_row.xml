@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Well Groomed Idiot"
+        android:textSize="18dp"
+        android:layout_marginLeft="100dp"
+        android:id="@+id/badgeTitle"
+        android:textColor="#000"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/badgePercentage"
+        android:text="999%"
+        android:textSize="18sp"
+        android:layout_marginRight="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/badgeTitle"
+        android:layout_alignParentTop="true" />
+
+</RelativeLayout>

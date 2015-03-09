@@ -16,20 +16,20 @@ import com.example.priyanshu.mappr.R;
 import java.util.ArrayList;
 
 /**
- * Created by priyanshu-sekhar on 27/2/15.
+ * Created by priyanshu-sekhar on 5/3/15.
  */
-public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHolder>{
+public class RecentBadgesAdapter extends RecyclerView.Adapter<RecentBadgesAdapter.MyViewHolder>{
     private LayoutInflater inflater;
     ArrayList<CommentRow> data;
     Context context;
-    public CommentAdapter(Context context, ArrayList<CommentRow> data) {
+    public RecentBadgesAdapter(Context context, ArrayList<CommentRow> data) {
         inflater = LayoutInflater.from(context);
         this.data = data;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = inflater.inflate(R.layout.comment_row, viewGroup, false);
+        View view = inflater.inflate(R.layout.recent_badges_row, viewGroup, false);
         MyViewHolder myViewHolder = new MyViewHolder(view);
         context=viewGroup.getContext();
         return myViewHolder;

@@ -13,13 +13,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.android.volley.RequestQueue;
 import com.example.priyanshu.mappr.Fragments.BadgesEarnedFragment;
 import com.example.priyanshu.mappr.Fragments.NavigationDrawerFragment;
 import com.example.priyanshu.mappr.Fragments.PerfAnalFragment;
 import com.example.priyanshu.mappr.Fragments.RecentBadgesFragment;
 import com.example.priyanshu.mappr.R;
+import com.example.priyanshu.mappr.network.VolleySingleton;
 import com.example.priyanshu.mappr.tabs.SlidingTabLayout;
 
+import java.util.ArrayList;
+
+import static com.example.priyanshu.mappr.Activities.LoginPage.badges;
+import static com.example.priyanshu.mappr.Activities.LoginPage.recentBadges;
 /**
  * Created by priyanshu-sekhar on 2/3/15.
  */
@@ -29,12 +35,16 @@ public class BehaviourActivity extends ActionBarActivity{
     private ViewPager mPager;
     private SlidingTabLayout mTabs;
     private final int COUNT_OF_TABS = 3;
-    private final int POSITION = 0;
+    private final RequestQueue mRequestQueue = VolleySingleton.getInstance().getRequestQueue();
+    private ArrayList<Integer> badgesIds = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_academics);
+        extractBadgeIds(badges);
+
 
         // Set a toolbar to replace the action bar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -95,6 +105,14 @@ public class BehaviourActivity extends ActionBarActivity{
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void extractBadgeIds(String string) {
+        String[] arr = string.split(",");
+        for(String s: arr) {
+            badgesIds.add(Integer.parseInt(s));
+        }
+
+    }
     class MyPagerAdapter extends FragmentPagerAdapter {
 
         private String[] tabsTitle;
@@ -108,7 +126,7 @@ public class BehaviourActivity extends ActionBarActivity{
         public Fragment getItem(int position) {
             switch(position) {
                 case 0:
-                    return new BadgesEarnedFragment();
+                    return new BadgesEarnedFragment(badgesIds);
                 case 1:
                     return new RecentBadgesFragment();
                 case 2:
@@ -132,5 +150,7 @@ public class BehaviourActivity extends ActionBarActivity{
             return tabsTitle[position];
         }
     }
+
+
 
 }

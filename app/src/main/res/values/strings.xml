@@ -50,6 +50,23 @@
         <item>Mrs.</item>
         <item>Dr.</item>
     </string-array>
+
+    <string-array name="badges_list">
+        <item>Hard Work</item>
+        <item>Creativity</item>
+        <item>Helping others</item>
+        <item>Participation in class</item>
+        <item>Respectful</item>
+        <item>Motivated</item>
+        <item>Disrespectful</item>
+        <item>Aggressive</item>
+        <item>Talking out of turn</item>
+        <item>Late to class</item>
+        <item>No homework</item>
+        <item>Untidily dressed</item>
+    </string-array>
+
+
     <string name="title_activity_academics">AcademicsActivity</string>
     <string name="title_activity_ex_cur">ExCurActivity</string>
     <string name="title_activity_behaviour">BehaviourActivity</string>

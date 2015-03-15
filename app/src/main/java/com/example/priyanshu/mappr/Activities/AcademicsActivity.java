@@ -20,6 +20,8 @@ import com.example.priyanshu.mappr.Fragments.ReportCardFragment;
 import com.example.priyanshu.mappr.R;
 import com.example.priyanshu.mappr.tabs.SlidingTabLayout;
 
+import java.util.ArrayList;
+
 
 public class AcademicsActivity extends ActionBarActivity {
     /**
@@ -31,6 +33,7 @@ public class AcademicsActivity extends ActionBarActivity {
     private SlidingTabLayout mTabs;
     private final int COUNT_OF_TABS = 3;
     private final int POSITION = 1;
+    private ArrayList<Integer> badges = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +113,7 @@ public class AcademicsActivity extends ActionBarActivity {
                 case 0:
                     return new ReportCardFragment();
                 case 1:
-                    return new BadgesEarnedFragment();
+                    return new BadgesEarnedFragment(badges);
                 case 2:
                     return new PerfAnalFragment();
             }

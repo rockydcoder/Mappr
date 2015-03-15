@@ -18,6 +18,8 @@ public class URLEndPoints {
     public static final String URL_TYPE_GROUP_TITLE = "get_this_group_title";
     public static final String URL_TYPE_TEACHER_NAME = "get_this_teacher_name";
     public static final String URL_TYPE_STUDENT_NAME = "get_this_student_name";
+    public static final String URL_PROFILE_PICTURE = "http://www.mappr.in/images/students/profile-images/";
+
 
 
 }

@@ -36,6 +36,8 @@ public class HomeActivity extends ActionBarActivity {
     private final int COUNT_OF_TABS = 4;
     public ArrayList<String> groupTitles = new ArrayList<>();
     public ArrayList<String> classMatesNames = new ArrayList<>();
+    public ArrayList<Integer> postsIds = new ArrayList<>();
+    public ArrayList<String> teachersNames = new ArrayList<>();
 
 
     @Override
@@ -44,8 +46,13 @@ public class HomeActivity extends ActionBarActivity {
         setContentView(R.layout.activity_home_page);
 
         Bundle bundle = getIntent().getExtras();
-        groupTitles = bundle.getStringArrayList("groupTitles");
-        classMatesNames = bundle.getStringArrayList("matesNames");
+        if(bundle != null) {
+            groupTitles = bundle.getStringArrayList("groupTitles");
+            classMatesNames = bundle.getStringArrayList("matesNames");
+            postsIds = bundle.getIntegerArrayList("postsIds");
+            teachersNames = bundle.getStringArrayList("teachersNames");
+        }
+
 
         // Set a toolbar to replace the action bar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -120,11 +127,11 @@ public class HomeActivity extends ActionBarActivity {
         public Fragment getItem(int position) {
             switch(position) {
                 case 0:
-                    return new TimelineFragment();
+                    return new TimelineFragment(postsIds);
                 case 1:
                     return new GroupsFragment(groupTitles);
                 case 2:
-                    return new TeachersFragment();
+                    return new TeachersFragment(teachersNames);
                 case 3:
                     return new StudentsFragment(classMatesNames);
             }

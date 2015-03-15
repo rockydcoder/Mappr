@@ -64,6 +64,7 @@ public class TimelineFragment extends Fragment{
     public static String userCommentTag="userComment";
     public static String noOfCommentsTag="noOfComments";
     public static String name="Soham Choksi";
+
     /***************TimeStamp variables******************/
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
@@ -74,6 +75,10 @@ public class TimelineFragment extends Fragment{
 
     AutoCompleteTextView group;
     Dialog dialog;
+
+    public TimelineFragment(ArrayList<Integer> postIds) {
+        wallList = postIds;
+    }
 
 
 

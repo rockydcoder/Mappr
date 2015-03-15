@@ -17,5 +17,10 @@ public interface Keys {
         public static final String KEY_WALL_LIST = "Wall Posts";
         public static final String KEY_TEACHER_NAME = "TeacherName";
         public static final String KEY_STUDENT_NAME = "StudentName";
+        public static final String KEY_PROFILE_PICTURE = "ProfilePicture";
+        public static final String KEY_STUDENT_ID = "StudentID";
+        public static final String KEY_BADGES = "Badges";
+        public static final String KEY_RECENT_BADGES = "Recent Badges";
+        public static final String KEY_TEACHERS_LIST = "Teachers";
     }
 }

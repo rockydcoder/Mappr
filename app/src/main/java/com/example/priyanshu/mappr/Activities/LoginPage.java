@@ -3,6 +3,7 @@ package com.example.priyanshu.mappr.Activities;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import static com.example.priyanshu.mappr.Extras.URLEndPoints.*;
@@ -41,13 +43,20 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
     private String username = null;
     private String password = null;
     public static String name;
+    public static Bitmap dispPic;
+    public static int id;
+    public static ArrayList<Integer> badgesList = new ArrayList<>();
+    public static String badges;
+    public static String recentBadges;
     public ArrayList<Integer> groupsList = new ArrayList<>();
     public ArrayList<Integer> wallList = new ArrayList<>();
     public ArrayList<Integer> classmatesList = new ArrayList<>();
+    public ArrayList<Integer> teachersList = new ArrayList<>();
     public ArrayList<String> groupsTitles = new ArrayList<>();
     public ArrayList<String> classmatesNames = new ArrayList<>();
     public ArrayList<String> teachersNames = new ArrayList<>();
     final RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
+    private ImageLoader imageLoader;
     private ProgressDialog dialog;
 
     static int i;
@@ -56,6 +65,7 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
+        imageLoader = VolleySingleton.getInstance().getImageLoader();
 
         initialize();
 
@@ -119,23 +129,46 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     try {
+                                        id = Integer.parseInt(response.getString(KEY_STUDENT_ID));
                                         String firstName = response.getString(KEY_FIRST_NAME);
                                         String middleName = response.getString(KEY_MIDDLE_NAME);
                                         String lastName = response.getString(KEY_LAST_NAME);
                                         String allGroups = response.getString(KEY_GROUPS_LIST);
                                         String allPosts = response.getString(KEY_WALL_LIST);
                                         String allMates = response.getString(KEY_CLASSMATES_LIST);
+                                        String allTeachers = response.getString(KEY_TEACHERS_LIST);
+                                        String profilePic = response.getString(KEY_PROFILE_PICTURE);
+                                        badges = response.getString(KEY_BADGES);
+                                        recentBadges = response.getString(KEY_RECENT_BADGES);
+
+
 
                                         extractGroupIDs(allGroups);
                                         extractClassMateIDs(allMates);
                                         extractPostIDs(allPosts);
+                                        extractTeacherIDs(allTeachers);
+
                                         name = firstName + " " + middleName + " " + lastName;
                                         dialog  = new ProgressDialog(LoginPage.this);
                                         dialog.setMessage("Downloading info");
                                         dialog.show();
-//                                        new GetData().execute();
+
+                                        imageLoader.get(getDisplayPicRequestUrl(profilePic), new ImageLoader.ImageListener() {
+                                            @Override
+                                            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                                                dispPic = response.getBitmap();
+                                            }
+
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                Log.d("Log in", "Display pic error");
+
+                                            }
+                                        });
+
                                         extractGroupTitles();
                                         extractMatesNames();
+                                        extractTeachersNames();
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -218,6 +251,13 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
             groupsList.add(Integer.parseInt(s));
     }
 
+    private void extractTeacherIDs(String allTeachers) {
+        String[] array = allTeachers.split(",");
+        for(String s: array)
+            teachersList.add(Integer.parseInt(s));
+
+    }
+
     private String getGroupTitleRequestUrl(Integer integer) {
         return URL_LOG_IN+
                 URL_CHAR_QUESTION+
@@ -228,6 +268,10 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
                 URL_GROUP_ID+
                 URL_CHAR_EQUAL+
                 integer.toString();
+    }
+
+    private String getDisplayPicRequestUrl(String url) {
+        return URL_PROFILE_PICTURE + url;
     }
 
     private String getMateNameRequestUrl(Integer integer) {
@@ -291,12 +335,6 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
 
                                     groupsTitles.add(currentTitle);
 
-//                                if(groupsTitles.size() == groupsList.size()) {
-//                                    dialog.dismiss();
-//                                    changeActivity();
-//
-//                                }
-
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -335,12 +373,12 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
 
                                 classmatesNames.add(currentTitle);
 
-                                if(classmatesList.size() == classmatesNames.size()) {
-                                    Log.d("dialog", "dismiss");
-                                    dialog.dismiss();
-                                    changeActivity();
-
-                                }
+//                                if(classmatesList.size() == classmatesNames.size()) {
+//                                    Log.d("dialog", "dismiss");
+//                                    dialog.dismiss();
+//                                    changeActivity();
+//
+//                                }
 
 
                             } catch (JSONException e) {
@@ -369,24 +407,24 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
     private void extractTeachersNames() {
 
         JsonObjectRequest groupRequest;
-        for(i = 0; i < classmatesList.size(); i++) {
+        for(i = 0; i < teachersList.size(); i++) {
             groupRequest = new JsonObjectRequest(Request.Method.GET,
-                    getMateNameRequestUrl(classmatesList.get(i)),
+                    getTeacherNameRequestUrl(teachersList.get(i)),
                     null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                String currentTitle = response.getString(KEY_STUDENT_NAME);
+                                String currentTitle = response.getString(KEY_TEACHER_NAME);
 
-                                classmatesNames.add(currentTitle);
+                                teachersNames.add(currentTitle);
 
-//                                if(classmatesList.size() == classmatesNames.size()) {
-//                                    Log.d("dialog", "dismiss");
-//                                    dialog.dismiss();
-//                                    changeActivity();
-//
-//                                }
+                                if(teachersList.size() == teachersNames.size()) {
+                                    Log.d("dialog", "dismiss");
+                                    dialog.dismiss();
+                                    changeActivity();
+
+                                }
 
 
                             } catch (JSONException e) {
@@ -417,6 +455,8 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
         Intent intent = new Intent(LoginPage.this, HomeActivity.class);
         intent.putStringArrayListExtra("groupTitles", groupsTitles);
         intent.putStringArrayListExtra("matesNames", classmatesNames);
+        intent.putIntegerArrayListExtra("postsIds", wallList);
+        intent.putStringArrayListExtra("teachersNames", teachersNames);
         startActivity(intent);
     }
 

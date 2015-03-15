@@ -24,6 +24,11 @@ public class BadgesEarnedFragment extends Fragment{
 
     private RecyclerView mRecyclerView;
     private BadgesAdapter badgesAdapter;
+    private ArrayList<Integer> badgesIds = new ArrayList<>();
+
+    public BadgesEarnedFragment(ArrayList<Integer> list) {
+        badgesIds = list;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -58,7 +58,7 @@ public class RecentBadgesFragment extends Fragment {
             String name;
             Badge badge = recentBadgesList.get(i);
             if(badge.isPositiveBadge())
-                name = "<font color='green'>" + badge.getBadgeTitle() + "</font>";
+                name = "<font color=#4CAF50>" + badge.getBadgeTitle() + "</font>";
 
             else
                 name = "<font color='red'>" + badge.getBadgeTitle() + "</font>";

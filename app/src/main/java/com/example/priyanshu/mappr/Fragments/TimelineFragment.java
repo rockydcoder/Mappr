@@ -26,12 +26,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
 import com.example.priyanshu.mappr.Activities.CommentPage;
 import com.example.priyanshu.mappr.Adapters.CustomAdapter;
 import com.example.priyanshu.mappr.Adapters.MapprDatabaseAdapter;
 import com.example.priyanshu.mappr.Data.CardInfo;
 import com.example.priyanshu.mappr.Data.SingleRowData;
 import com.example.priyanshu.mappr.R;
+import com.example.priyanshu.mappr.network.VolleySingleton;
 import com.software.shell.fab.ActionButton;
 
 import java.util.ArrayList;
@@ -56,10 +58,10 @@ public class TimelineFragment extends Fragment{
     ArrayList<CardInfo> cardData;
     String title="psp";
     String subTitle="dynamite";
-    ArrayList<Card> cards;
+    private ArrayList<Card> cards = new ArrayList<>();
     static final String cardInfoTAG="cards";
 
-    public static String iconIdTag="iconId";
+    public static String iconIdTag = "iconId";
     public static String userNameTag="userNames";
     public static String userCommentTag="userComment";
     public static String noOfCommentsTag="noOfComments";
@@ -72,6 +74,7 @@ public class TimelineFragment extends Fragment{
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
 
     private ArrayList<Integer> wallList = new ArrayList<>();
+    private RequestQueue mRequestQueue = VolleySingleton.getInstance().getRequestQueue();
 
     AutoCompleteTextView group;
     Dialog dialog;
@@ -79,8 +82,6 @@ public class TimelineFragment extends Fragment{
     public TimelineFragment(ArrayList<Integer> postIds) {
         wallList = postIds;
     }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,18 +93,13 @@ public class TimelineFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.layout_timeline, container, false);
-        cards = new ArrayList<>();
-        if(savedInstanceState==null){
-            cardData=new ArrayList<>();
-            /*for(int i=1;i<=3;i++) {
-                addCard(cards,title,subTitle,true);
-            }*/
-
+        if(savedInstanceState == null) {
+            cardData = new ArrayList<>();
         }
-        else{
-            cardData=savedInstanceState.getParcelableArrayList(cardInfoTAG);
-            for(CardInfo data:cardData) {
-                addCard(cards, data.title, data.subTitle,false);
+        else {
+            cardData = savedInstanceState.getParcelableArrayList(cardInfoTAG);
+            for(CardInfo data: cardData) {
+                addCard(cards, data.title, data.subTitle, false);
             }
         }
         actionButton = (ActionButton) layout.findViewById(R.id.action_button);
@@ -136,11 +132,10 @@ public class TimelineFragment extends Fragment{
                 dialog.setCanceledOnTouchOutside(true);
                 dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
                 MapprDatabaseAdapter mapprDatabaseAdapter=new MapprDatabaseAdapter(dialog.getContext());
-                group=(AutoCompleteTextView)dialog.findViewById(R.id.group);
+                group = (AutoCompleteTextView)dialog.findViewById(R.id.group);
                 ArrayList<String> groups=mapprDatabaseAdapter.getGroups();
                 ArrayAdapter adapter=new ArrayAdapter(dialog.getContext(),
                         android.R.layout.simple_expandable_list_item_1,groups);
-                Log.d("list",groups.get(0));
                 group.setAdapter(adapter);
 
                 cancel = (Button) dialog.findViewById(R.id.cancel);
@@ -160,20 +155,17 @@ public class TimelineFragment extends Fragment{
                         EditText post=(EditText)dialog.findViewById(R.id.post);
                         title="<b>"+name+"</b>"+"<font color='#BBBBBB'> posted in </font>"+
                                 "<b>"+group.getText().toString()+"</b>";
-                        subTitle=post.getText().toString();
-                        addCard(cards,title,subTitle,true);
+                        subTitle = post.getText().toString();
+                        addCard(cards, title, subTitle, true);
                         mCardArrayAdapter.notifyItemInserted(mCardArrayAdapter.getItemCount());
                         dialog.dismiss();
                         // when okay button is clicked
                     }
                 });
-
                 dialog.show();
 
             }
         });
-
-
         return layout;
     }
 

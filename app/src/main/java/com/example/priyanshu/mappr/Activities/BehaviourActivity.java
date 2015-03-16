@@ -125,7 +125,7 @@ public class BehaviourActivity extends ActionBarActivity{
             Badge currentBadge = new Badge();
             currentBadge.setBadgeId(Integer.parseInt(arr[i]));
             currentBadge.setTeacherId(Integer.parseInt(arr[i+1]));
-            currentBadge.setTimestamp(new Date(Long.parseLong(arr[i+2])));
+            currentBadge.setTimestamp(new Date(Long.parseLong(arr[i+2]) * 1000));
             currentBadge.setPositiveBadge(currentBadge.getBadgeId() <= 6);
             currentBadge.setBadgeTitle(badgeTitles[currentBadge.getBadgeId() - 1]);
             currentBadge.setTeacher("Soham Chokshi");

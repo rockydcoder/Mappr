@@ -70,6 +70,7 @@ public class HomeActivity extends ActionBarActivity {
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
 
+        // Set up the tabs
         mPager = (ViewPager) findViewById(R.id.pager);
 
         mPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));

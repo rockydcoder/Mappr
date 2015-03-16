@@ -141,8 +141,6 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
                                         badges = response.getString(KEY_BADGES);
                                         recentBadges = response.getString(KEY_RECENT_BADGES);
 
-
-
                                         extractGroupIDs(allGroups);
                                         extractClassMateIDs(allMates);
                                         extractPostIDs(allPosts);
@@ -399,10 +397,7 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
                     });
 
             requestQueue.add(groupRequest);
-
-
         }
-
     }
 
     private void extractTeachersNames() {
@@ -431,8 +426,6 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-
                         }
 
 
@@ -441,18 +434,14 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.d("error", error.getMessage());
-
                         }
                     });
-
             requestQueue.add(groupRequest);
-
         }
-
     }
 
     /**
-     *
+     * Put extras in intent and start Home Activity
      */
     private void changeActivity() {
 

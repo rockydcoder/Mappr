@@ -400,6 +400,7 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
 
             requestQueue.add(groupRequest);
 
+
         }
 
     }
@@ -450,6 +451,9 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
 
     }
 
+    /**
+     *
+     */
     private void changeActivity() {
 
         Intent intent = new Intent(LoginPage.this, HomeActivity.class);

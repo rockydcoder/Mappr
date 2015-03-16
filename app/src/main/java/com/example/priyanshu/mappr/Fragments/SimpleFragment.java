@@ -49,23 +49,23 @@ public abstract class SimpleFragment extends Fragment {
         xVals = new ArrayList<>();
         totalBadges=0;
         for(BadgesEarned badgeEarned:badgesEarned) {
-            totalBadges+=badgeEarned.badgeCount;
-            if(badgeEarned.positiveBadge)
-                totBadges+=badgeEarned.badgeCount;
+            totalBadges+=badgeEarned.getBadgeCount();
+            if(badgeEarned.isPositiveBadge())
+                totBadges+=badgeEarned.getBadgeCount();
             else
-                totBadges-=badgeEarned.badgeCount;
-            if(badgeEarned.badgeCount>maxBadgeCount)
-                maxBadgeCount=badgeEarned.badgeCount;
+                totBadges-=badgeEarned.getBadgeCount();
+            if(badgeEarned.getBadgeCount() > maxBadgeCount)
+                maxBadgeCount=badgeEarned.getBadgeCount();
         }
         for(BadgesEarned badgeEarned:badgesEarned){
-            if(badgeEarned.badgeCount!=0) {
-                float percentage = (float) (badgeEarned.badgeCount * 100) / totalBadges;
+            if(badgeEarned.getBadgeCount() != 0) {
+                float percentage = (float) (badgeEarned.getBadgeCount() * 100) / totalBadges;
                 xVals.add(badgeEarned.getBadgeName() + "-" + percentage + "%");
                 entries1.add(new Entry(percentage, count++));
-                if (badgeEarned.positiveBadge)
-                    colors.add(Color.rgb(badgeEarned.badgeCount * 255 / maxBadgeCount, 0, 0));
+                if (badgeEarned.isPositiveBadge())
+                    colors.add(Color.rgb(badgeEarned.getBadgeCount() * 255 / maxBadgeCount, 0, 0));
                 else
-                    colors.add(Color.rgb(0, badgeEarned.badgeCount * 255 / maxBadgeCount, 0));
+                    colors.add(Color.rgb(0, badgeEarned.getBadgeCount() * 255 / maxBadgeCount, 0));
             }
         }
 

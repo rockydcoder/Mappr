@@ -37,8 +37,9 @@
 
     <string-array name="acads_fragments_list">
         <item>REPORT CARD</item>
-        <item>CLASS TEACHER VIEW</item>
-        <item>PERFORMANCE ANALYSIS</item>
+        <item>EXAM-WISE STATISTICS</item>
+        <item>SUBJECT-WISE STATISTICS</item>
+        <item>COMPARATIVE ANALYSIS</item>
     </string-array>
 
     <string name="title_activity_sign_up_student">SignUpStudent</string>

@@ -70,9 +70,9 @@ public class PerfAnalFragment extends SimpleFragment {
        */
         int totalBadges=0;
         for(BadgesEarned badgeEarned:data)
-            totalBadges+=badgeEarned.badgeCount;
+            totalBadges+=badgeEarned.getBadgeCount();
         for(int i=0;i<data.size();i++)
-            data.get(i).badgePercentage=(int)data.get(i).badgeCount*100/totalBadges;
+            data.get(i).setBadgePercentage((int)data.get(i).getBadgeCount()*100/totalBadges);
 
         badgeChartAdapter = new BadgeChartAdapter(getActivity(),data);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.badge_list);

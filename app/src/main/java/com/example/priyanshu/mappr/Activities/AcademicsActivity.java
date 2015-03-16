@@ -14,9 +14,12 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.priyanshu.mappr.Fragments.BadgesEarnedFragment;
+import com.example.priyanshu.mappr.Fragments.CompPerfFragment;
+import com.example.priyanshu.mappr.Fragments.ExamStatsFragment;
 import com.example.priyanshu.mappr.Fragments.NavigationDrawerFragment;
 import com.example.priyanshu.mappr.Fragments.PerfAnalFragment;
 import com.example.priyanshu.mappr.Fragments.ReportCardFragment;
+import com.example.priyanshu.mappr.Fragments.SubStatsFragment;
 import com.example.priyanshu.mappr.R;
 import com.example.priyanshu.mappr.tabs.SlidingTabLayout;
 
@@ -31,8 +34,7 @@ public class AcademicsActivity extends ActionBarActivity {
     private Toolbar toolbar;
     private ViewPager mPager;
     private SlidingTabLayout mTabs;
-    private final int COUNT_OF_TABS = 3;
-    private final int POSITION = 1;
+    private final int COUNT_OF_TABS = 4;
     private ArrayList<Integer> badges = new ArrayList<>();
 
     @Override
@@ -113,9 +115,11 @@ public class AcademicsActivity extends ActionBarActivity {
                 case 0:
                     return new ReportCardFragment();
                 case 1:
-                    return new BadgesEarnedFragment(badges);
+                    return new ExamStatsFragment();
                 case 2:
-                    return new PerfAnalFragment();
+                    return new SubStatsFragment();
+                case 3:
+                    return new CompPerfFragment();
             }
 
             return null;

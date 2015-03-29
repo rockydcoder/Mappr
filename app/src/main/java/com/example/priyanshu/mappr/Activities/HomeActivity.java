@@ -33,11 +33,11 @@ public class HomeActivity extends ActionBarActivity {
     private Toolbar toolbar;
     private ViewPager mPager;
     private SlidingTabLayout mTabs;
-    private final int COUNT_OF_TABS = 4;
-    public ArrayList<String> groupTitles = new ArrayList<>();
-    public ArrayList<String> classMatesNames = new ArrayList<>();
+    private final int COUNT_OF_TABS = 1;
+//    public ArrayList<String> groupTitles = new ArrayList<>();
+//    public ArrayList<String> classMatesNames = new ArrayList<>();
     public ArrayList<Integer> postsIds = new ArrayList<>();
-    public ArrayList<String> teachersNames = new ArrayList<>();
+//    public ArrayList<String> teachersNames = new ArrayList<>();
 
 
     @Override
@@ -47,10 +47,10 @@ public class HomeActivity extends ActionBarActivity {
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
-            groupTitles = bundle.getStringArrayList("groupTitles");
-            classMatesNames = bundle.getStringArrayList("matesNames");
+//            groupTitles = bundle.getStringArrayList("groupTitles");
+//            classMatesNames = bundle.getStringArrayList("matesNames");
             postsIds = bundle.getIntegerArrayList("postsIds");
-            teachersNames = bundle.getStringArrayList("teachersNames");
+//            teachersNames = bundle.getStringArrayList("teachersNames");
         }
 
 
@@ -129,12 +129,12 @@ public class HomeActivity extends ActionBarActivity {
             switch(position) {
                 case 0:
                     return new TimelineFragment(postsIds);
-                case 1:
-                    return new GroupsFragment(groupTitles);
-                case 2:
-                    return new TeachersFragment(teachersNames);
-                case 3:
-                    return new StudentsFragment(classMatesNames);
+//                case 1:
+//                    return new GroupsFragment(groupTitles);
+//                case 2:
+//                    return new TeachersFragment(teachersNames);
+//                case 3:
+//                    return new StudentsFragment(classMatesNames);
             }
 
             return null;

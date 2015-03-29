@@ -133,7 +133,6 @@ public class GroupsFragment extends Fragment {
         if(check)
         {
             check = false;
-//            List<String> groups = mapprDatabaseAdapter.getGroups();
             for(int i = 0; i < groupsTitles.size(); i++) {
                 SingleRowData current = new SingleRowData();
                 current.setIconId(R.drawable.user);

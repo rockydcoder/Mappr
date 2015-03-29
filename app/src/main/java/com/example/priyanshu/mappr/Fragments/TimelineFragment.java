@@ -48,13 +48,18 @@ import it.gmariotti.cardslib.library.internal.ViewToClickToExpand;
 import it.gmariotti.cardslib.library.recyclerview.internal.CardArrayRecyclerViewAdapter;
 import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
 
+import static com.example.priyanshu.mappr.Fragments.GroupsFragment.groupsTitles;
+
 
 /**
  * Created by priyanshu-sekhar on 24/2/15.
  */
 public class TimelineFragment extends Fragment{
 
-    private ActionButton actionButton;
+    ActionButton actionButton;
+    AutoCompleteTextView group;
+    Dialog dialog;
+
     ArrayList<CardInfo> cardData;
     String title="psp";
     String subTitle="dynamite";
@@ -76,8 +81,7 @@ public class TimelineFragment extends Fragment{
     private ArrayList<Integer> wallList = new ArrayList<>();
     private RequestQueue mRequestQueue = VolleySingleton.getInstance().getRequestQueue();
 
-    AutoCompleteTextView group;
-    Dialog dialog;
+
 
     public TimelineFragment(ArrayList<Integer> postIds) {
         wallList = postIds;
@@ -133,7 +137,7 @@ public class TimelineFragment extends Fragment{
                 dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
                 MapprDatabaseAdapter mapprDatabaseAdapter=new MapprDatabaseAdapter(dialog.getContext());
                 group = (AutoCompleteTextView)dialog.findViewById(R.id.group);
-                ArrayList<String> groups=mapprDatabaseAdapter.getGroups();
+                ArrayList<String> groups = groupsTitles;
                 ArrayAdapter adapter=new ArrayAdapter(dialog.getContext(),
                         android.R.layout.simple_expandable_list_item_1,groups);
                 group.setAdapter(adapter);

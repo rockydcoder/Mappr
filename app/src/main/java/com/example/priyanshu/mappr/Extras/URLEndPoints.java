@@ -20,6 +20,10 @@ public class URLEndPoints {
     public static final String URL_TYPE_STUDENT_NAME = "get_this_student_name";
     public static final String URL_PROFILE_PICTURE = "http://www.mappr.in/images/";
     public static final String URL_PROFILE_IMAGE = "/profile-images/";
+    public static final String URL_TYPE_ALL = "get_all";
+    public static final String URL_USERTYPE = "usertype";
+
+
 
 
 

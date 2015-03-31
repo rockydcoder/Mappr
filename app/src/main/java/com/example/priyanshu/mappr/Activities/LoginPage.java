@@ -279,7 +279,7 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
                                                 String middleName = response.getString(KEY_MIDDLE_NAME);
                                                 String lastName = response.getString(KEY_LAST_NAME);
 //                                                String allGroups = response.getString(KEY_GROUPS_LIST);
-//                                                String allPosts = response.getString(KEY_WALL_LIST);
+                                                String allPosts = response.getString(KEY_WALL_LIST);
 //                                                String allMates = response.getString(KEY_CLASSMATES_LIST);
 //                                                String allTeachers = response.getString(KEY_TEACHERS_LIST);
                                                 String profilePic = response.getString(KEY_PROFILE_PICTURE);
@@ -288,7 +288,7 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
 
 //                                        extractGroupIDs(allGroups);
 //                                        extractClassMateIDs(allMates);
-//                                                extractPostIDs(allPosts);
+                                                extractPostIDs(allPosts);
 //                                        extractTeacherIDs(allTeachers);
 
                                                 name = firstName + " " + middleName + " " + lastName;

@@ -49,7 +49,7 @@ public class GroupsFragment extends Fragment {
     private ActionButton actionButton;
     private static List<SingleRowData> data = new ArrayList<>();
     private static boolean check = true;
-    private static MapprDatabaseAdapter mapprDatabaseAdapter;
+//    private static MapprDatabaseAdapter mapprDatabaseAdapter;
     public static ArrayList<String> groupsTitles = new ArrayList<>();
 
     public GroupsFragment(ArrayList<String> titles) {
@@ -65,7 +65,7 @@ public class GroupsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.layout_groups, container, false);
-        mapprDatabaseAdapter = new MapprDatabaseAdapter(container.getContext());
+//        mapprDatabaseAdapter = new MapprDatabaseAdapter(container.getContext());
         mRecyclerView = (RecyclerView) layout.findViewById(R.id.groups_list);
         customAdapter = new CustomAdapter(getActivity(), getData());
         mRecyclerView.setAdapter(customAdapter);

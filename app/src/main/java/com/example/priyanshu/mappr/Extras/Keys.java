@@ -22,5 +22,13 @@ public interface Keys {
         public static final String KEY_BADGES = "Badges";
         public static final String KEY_RECENT_BADGES = "Recent Badges";
         public static final String KEY_TEACHERS_LIST = "Teachers";
+
+
+    }
+
+    public interface Database {
+        public static final String KEY_USER_IDS = "UserIds";
+        public static final String KEY_USER_NAMES = "UserFullNames";
+
     }
 }

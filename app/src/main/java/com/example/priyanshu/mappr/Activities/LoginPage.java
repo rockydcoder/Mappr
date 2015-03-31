@@ -25,9 +25,12 @@ import com.example.priyanshu.mappr.network.VolleySingleton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import static com.example.priyanshu.mappr.Extras.Keys.LogIn.KEY_FIRST_NAME;
 import static com.example.priyanshu.mappr.Extras.Keys.LogIn.KEY_LAST_NAME;
 import static com.example.priyanshu.mappr.Extras.Keys.LogIn.KEY_MIDDLE_NAME;
+import static com.example.priyanshu.mappr.Extras.Keys.LogIn.KEY_WALL_LIST;
 import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_CHAR_AMPERSAND;
 import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_CHAR_EQUAL;
 import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_CHAR_QUESTION;
@@ -41,14 +44,15 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
 
     private EditText userName;
     private EditText passWord;
-    private CheckBox rememberPassword;
+    private CheckBox keepLogged;
     private Button login, signup;
     private String username = null;
     private String password = null;
     public static String name;
-
-
-
+    private boolean isLoggedIn=false;
+    public String logPreg = "keepLogged";
+    public ArrayList<Integer> wallList = new ArrayList<>();
+    public static String wallListTAG="postsIds";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +94,7 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
     public void initialize(){
         userName = (EditText)findViewById(R.id.userName);
         passWord = (EditText)findViewById(R.id.passWord);
-        rememberPassword = (CheckBox)findViewById(R.id.remember);
+        keepLogged = (CheckBox)findViewById(R.id.remember);
         login = (Button)findViewById(R.id.login);
         signup = (Button) findViewById(R.id.signup);
 
@@ -116,7 +120,7 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
                     RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
                     JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
                             getRequestUrl(username, password),
-                            null,
+
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
@@ -124,11 +128,12 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
                                         String firstName = response.getString(KEY_FIRST_NAME);
                                         String middleName = response.getString(KEY_MIDDLE_NAME);
                                         String lastName = response.getString(KEY_LAST_NAME);
+                                        String allPosts=response.getString(KEY_WALL_LIST);
 
                                         name = firstName + " " + middleName + " " + lastName;
 
-                                        Intent intent = new Intent(LoginPage.this, HomeActivity.class);
-                                        startActivity(intent);
+                                        extractPostIDs(allPosts);
+                                        changeActivity();
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -146,7 +151,6 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
 
 
                     requestQueue.add(request);
-
 
 
                 }
@@ -197,6 +201,12 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
         return etText.getText().toString().trim().length() == 0;
     }
 
+    private void extractPostIDs(String allPosts) {
+        String[] array = allPosts.split(",");
+        for(String s: array)
+            wallList.add(Integer.parseInt(s));
+
+    }
     private String getRequestUrl(String username, String password) {
         return URL_LOG_IN+
                 URL_CHAR_QUESTION+
@@ -214,5 +224,17 @@ public class LoginPage extends ActionBarActivity implements View.OnClickListener
 
     }
 
+    /**
+            * Put extras in intent and start Home Activity
+    */
+    private void changeActivity() {
+
+        Intent intent = new Intent(LoginPage.this, HomeActivity.class);
+//        intent.putStringArrayListExtra("groupTitles", groupsTitles);
+//        intent.putStringArrayListExtra("matesNames", classmatesNames);
+        intent.putIntegerArrayListExtra(wallListTAG, wallList);
+//        intent.putStringArrayListExtra("teachersNames", teachersNames);
+        startActivity(intent);
+    }
 
 }

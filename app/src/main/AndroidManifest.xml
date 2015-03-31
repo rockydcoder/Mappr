@@ -3,10 +3,23 @@
     package="com.example.priyanshu.mappr" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <permission
+        android:name="com.example.priyanshu.mappr.Messaging.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.example.priyanshu.mappr.Messaging.permission.C2D_MESSAGE" />
+
+
+
+    <uses-permission android:name="com.example.gcm.permission.C2D_MESSAGE" />
 
     <application
-        android:allowBackup="true"
         android:name=".Data.MapprApplication"
+        android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
@@ -17,8 +30,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".Messaging.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.example.priyanshu.mappr" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".Messaging.GcmIntentService" />
+
         <activity android:name=".Activities.HomeActivity" >
         </activity>
+
+        <provider
+            android:name=".Messaging.DataProvider"
+            android:authorities="com.example.priyanshu.mappr.Messaging"
+            android:exported="false" >
+        </provider>
+
         <activity
             android:name=".Activities.SignUpStudent"
             android:label="@string/title_activity_sign_up_student" >
@@ -41,7 +74,14 @@
             android:name=".Activities.TrendsActivity"
             android:label="@string/title_activity_trends" >
         </activity>
-
+        <activity
+            android:name=".Messaging.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name=".Messaging.Messaging"
+            android:label="@string/title_activity_messaging" >
+        </activity>
     </application>
 
 </manifest>

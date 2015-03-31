@@ -9,17 +9,20 @@ import android.os.Parcelable;
 public class CardInfo implements Parcelable{
     public String title;
     public String subTitle;
+    public String timeStamp;
     public long timeAdded;
     public long timeDisplayed;
 
     public CardInfo(Parcel in){
       title=in.readString();
       subTitle=in.readString();
+      timeStamp=in.readString();
     }
 
-    public CardInfo(String title,String subTitle){
+    public CardInfo(String title,String subTitle,String timeStamp){
        this.title=title;
        this.subTitle=subTitle;
+       this.timeStamp=timeStamp;
     }
 
     @Override

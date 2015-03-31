@@ -90,8 +90,6 @@ public class GroupsFragment extends Fragment {
                         String title = etTitle.getText().toString();
                         if(title != null) {
                             addData(title);
-                            long id = mapprDatabaseAdapter.insertGroup(title);
-                            Toast.makeText(getActivity(), id + "", Toast.LENGTH_LONG).show();
                             customAdapter.notifyItemInserted(customAdapter.getItemCount());
                             dialog.dismiss();
                         }

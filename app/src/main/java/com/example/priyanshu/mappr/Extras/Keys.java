@@ -11,5 +11,6 @@ public interface Keys {
         public static final String KEY_FIRST_NAME = "FirstName";
         public static final String KEY_MIDDLE_NAME = "MiddleName";
         public static final String KEY_LAST_NAME = "LastName";
+        public static final String KEY_WALL_LIST="Wall Posts";
     }
 }

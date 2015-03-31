@@ -55,4 +55,11 @@
     <string name="title_activity_behaviour">BehaviourActivity</string>
     <string name="title_activity_trends">TrendsActivity</string>
 
+    <!--google cloud messaging-->
+    <string name="profile_id">235765685035</string>
+    <string name="pref_header_messaging">SettingsTest</string>
+    <string name="action_add">Add</string>
+    <string name="pref_itle_sender_id">219125488842</string>
+    <string name="pref_title_server_url">Url</string>
+    <string name="title_activity_messaging">Messaging</string>
 </resources>

@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,15 +26,26 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.priyanshu.mappr.Activities.CommentPage;
 import com.example.priyanshu.mappr.Adapters.CustomAdapter;
 import com.example.priyanshu.mappr.Adapters.MapprDatabaseAdapter;
 import com.example.priyanshu.mappr.Data.CardInfo;
 import com.example.priyanshu.mappr.Data.SingleRowData;
 import com.example.priyanshu.mappr.R;
+import com.example.priyanshu.mappr.network.VolleySingleton;
 import com.software.shell.fab.ActionButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -53,10 +65,17 @@ import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
 public class TimelineFragment extends Fragment{
 
     private ActionButton actionButton;
-    ArrayList<CardInfo> cardData;
+    ArrayList<CardInfo> cardData=new ArrayList<>();
     String title="psp";
     String subTitle="dynamite";
-    ArrayList<Card> cards;
+    ArrayList<Card> cards=new ArrayList<>();
+    public ArrayList<Integer> postIds;
+    public ArrayList<String> title_=new ArrayList<>();
+    public ArrayList<String> subTitle_=new ArrayList<>();
+    public ArrayList<String> timeStamp_=new ArrayList<>();
+
+    private String url="http://www.mappr.in/ipa/get_status.php?request_type=get_this_post&postid=";
+    public static String TimeStamp=System.currentTimeMillis()+"";
     static final String cardInfoTAG="cards";
 
     public static String iconIdTag="iconId";
@@ -77,88 +96,142 @@ public class TimelineFragment extends Fragment{
         super.onCreate(savedInstanceState);
 
     }
-
+    public TimelineFragment(ArrayList<Integer> postIds){
+        this.postIds=postIds;
+    }
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.layout_timeline, container, false);
-        cards = new ArrayList<>();
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
+        final View layout = inflater.inflate(R.layout.layout_timeline, container, false);
+       /* LinearLayout cardMainLayout= (LinearLayout)layout.findViewById(R.id.card_recyclerview)
+                .findViewById(R.id.list_cardId).findViewById(R.id.card_main_layout);
+
+        cardMainLayout.getLayoutParams().height=300;
+        cardMainLayout.invalidate();*/
+        final CustomRecycleViewAdapter mCardArrayAdapter = new CustomRecycleViewAdapter(getActivity(), cards);
         if(savedInstanceState==null){
-            cardData=new ArrayList<>();
-            /*for(int i=1;i<=3;i++) {
-                addCard(cards,title,subTitle,true);
-            }*/
+            for(int id:postIds){
+                Log.d("Id",id+"");
+                RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
+                JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
+                        url+id,
+
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    title_.add(response.getString("AccountType")+
+                                            response.getString("AccountID"));
+                                    subTitle_.add(response.getString("PostContent"));
+                                    timeStamp_.add(response.getString("PostedOn"));
+                                    for(int i=0;i<title_.size();i++){
+                                        title=title_.get(i);
+                                        subTitle=subTitle_.get(i);
+                                        TimeStamp=timeStamp_.get(i);
+                                        addCard(cards,title,subTitle,true);
+                                    }
+                                    mCardArrayAdapter.notifyItemInserted(mCardArrayAdapter.getItemCount());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        },
+
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("error", error.getMessage());
+
+                            }
+                        }
+
+                );
+               requestQueue.add(request);
+
+            }
+
 
         }
         else{
             cardData=savedInstanceState.getParcelableArrayList(cardInfoTAG);
+            Log.d("savedInstanceState","called");
             for(CardInfo data:cardData) {
                 addCard(cards, data.title, data.subTitle,false);
             }
         }
+
         actionButton = (ActionButton) layout.findViewById(R.id.action_button);
         actionButton.setButtonColor(getResources().getColor(R.color.primary));
         actionButton.setButtonColorPressed(getResources().getColor(R.color.primary_dark));
         actionButton.setImageResource(R.drawable.ic_action_edit);
         actionButton.show();
 
-        final CustomRecycleViewAdapter mCardArrayAdapter = new CustomRecycleViewAdapter(getActivity(), cards);
+
 
         //Staggered grid view
         CardRecyclerView mRecyclerView = (CardRecyclerView) layout.findViewById(R.id.card_recyclerview);
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
         //Set the empty view
         if (mRecyclerView != null) {
             mRecyclerView.setAdapter(mCardArrayAdapter);
 
         }
-         //mCardArrayAdapter.onBindViewHolder(new BaseRecyclerViewAdapter.CardViewHolder());
+
+//        title = "<b>" + name + "</b>" + "<font color='#BBBBBB'> posted in </font>" +
+//                "<b>" + "" + "</b>";
+//        subTitle = "mk";
+//        addCard(cards, title, subTitle, true);
+        mCardArrayAdapter.notifyItemInserted(mCardArrayAdapter.getItemCount());
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Button cancel, okay;
-                dialog = new Dialog(container.getContext());
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.layout_dialog_post);
-                dialog.setCanceledOnTouchOutside(true);
-                dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-                MapprDatabaseAdapter mapprDatabaseAdapter=new MapprDatabaseAdapter(dialog.getContext());
-                group=(AutoCompleteTextView)dialog.findViewById(R.id.group);
+                MapprDatabaseAdapter mapprDatabaseAdapter=new MapprDatabaseAdapter(container.getContext());
                 ArrayList<String> groups=mapprDatabaseAdapter.getGroups();
-                ArrayAdapter adapter=new ArrayAdapter(dialog.getContext(),
-                        android.R.layout.simple_expandable_list_item_1,groups);
-                Log.d("list",groups.get(0));
-                group.setAdapter(adapter);
+                if(groups.size()==0){
+                    Toast.makeText(getActivity(),"Please add a group first",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Button cancel, okay;
+                    dialog = new Dialog(container.getContext());
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.layout_dialog_post);
+                    dialog.setCanceledOnTouchOutside(true);
+                    dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                    group=(AutoCompleteTextView)dialog.findViewById(R.id.group);
+                    ArrayAdapter adapter = new ArrayAdapter(dialog.getContext(),
+                            android.R.layout.simple_expandable_list_item_1, groups);
+                    group.setAdapter(adapter);
 
-                cancel = (Button) dialog.findViewById(R.id.cancel);
-                okay = (Button) dialog.findViewById(R.id.okay);
+                    cancel = (Button) dialog.findViewById(R.id.cancel);
+                    okay = (Button) dialog.findViewById(R.id.okay);
 
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // when cancel button is clicked
-                        dialog.dismiss();
-                    }
-                });
+                    cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // when cancel button is clicked
+                            dialog.dismiss();
+                        }
+                    });
 
-                okay.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        EditText post=(EditText)dialog.findViewById(R.id.post);
-                        title="<b>"+name+"</b>"+"<font color='#BBBBBB'> posted in </font>"+
-                                "<b>"+group.getText().toString()+"</b>";
-                        subTitle=post.getText().toString();
-                        addCard(cards,title,subTitle,true);
-                        mCardArrayAdapter.notifyItemInserted(mCardArrayAdapter.getItemCount());
-                        dialog.dismiss();
-                        // when okay button is clicked
-                    }
-                });
+                    okay.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            EditText post = (EditText) dialog.findViewById(R.id.post);
+                            title = "<b>" + name + "</b>" + "<font color='#BBBBBB'> posted in </font>" +
+                                    "<b>" + group.getText().toString() + "</b>";
+                            subTitle = post.getText().toString();
+                            addCard(cards, title, subTitle, true);
+                            mCardArrayAdapter.notifyItemInserted(mCardArrayAdapter.getItemCount());
+                            dialog.dismiss();
+                            // when okay button is clicked
+                        }
+                    });
+                    dialog.show();
+                }
 
-                dialog.show();
 
             }
         });
@@ -183,7 +256,9 @@ public class TimelineFragment extends Fragment{
 
         //Add Header to card
         CustomHeaderInnerCard header = new CustomHeaderInnerCard(getActivity().getBaseContext(),title,subTitle);
+
         card.addCardHeader(header);
+
         CustomExpandCard expand = new CustomExpandCard(getActivity());
         card.addCardExpand(expand);
         //thumbnail
@@ -198,19 +273,16 @@ public class TimelineFragment extends Fragment{
                         .setupCardElement(ViewToClickToExpand.CardElementUI.CARD);
         card.setViewToClickToExpand(viewToClickToExpand);
         if(create)
-            cardData.add(new CardInfo(title,subTitle));
+            cardData.add(new CardInfo(title,subTitle,""));
         cards.add(card);
     }
 
     public static long currentDate() {
-        Calendar calendar = Calendar.getInstance();
-        return calendar.getTime().getTime();
+
+
+        return System.currentTimeMillis();
     }
-    public static String getTimeAgo(long time, Context ctx) {
-        if (time < 1000000000000L) {
-            // if timestamp given in seconds, convert to millis
-            time *= 1000;
-        }
+    public static String getTimeAgo(long time) {
 
         long now = currentDate();
         if (time > now || time <= 0) {
@@ -260,8 +332,21 @@ class CustomHeaderInnerCard extends CardHeader {
                 t1.setText(Html.fromHtml(title));
 
             TextView t2 = (TextView) view.findViewById(R.id.text_example2);
-            if (t2!=null)
+            if (t2!=null) {
                 t2.setText(subTitle);
+                int size=subTitle.length()/30;
+                int height=200;
+                if(size<=2)
+                    height=200;
+                else if(size==3)
+                    height=300;
+                else if(size<=6)
+                    height=500;
+                else
+                    height=700;
+                view.getLayoutParams().height=height;
+            }
+
         }
     }
 }
@@ -499,6 +584,8 @@ class CustomRecycleViewAdapter extends CardArrayRecyclerViewAdapter{
 //        });
 //        time.start();
         TextView reply=(TextView)cardViewHolder.itemView.findViewById(R.id.reply);
+        TextView timeStamp=(TextView)cardViewHolder.itemView.findViewById(R.id.timestamp);
+        timeStamp.setText(TimelineFragment.getTimeAgo(Long.parseLong(TimelineFragment.TimeStamp)));
         reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -53,8 +53,9 @@
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:text="stu3"
                 android:background="#26607d"
+                android:hint="UserName"
+                android:text="stu3"
                 android:textSize="30dp" />
         </RelativeLayout>
 
@@ -70,10 +71,11 @@
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="student"
                 android:layout_marginTop="5dp"
                 android:background="#26607d"
                 android:inputType="textPassword"
+                android:text="student"
+                android:hint="Password"
                 android:textSize="30dp" />
         </RelativeLayout>
 
@@ -122,13 +124,19 @@
             android:id="@+id/login"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
             android:background="@drawable/login_button_color"
             android:text="Login"
             android:textColor="#ffffff"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sp_login_type"
+            android:layout_above="@+id/login"
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 

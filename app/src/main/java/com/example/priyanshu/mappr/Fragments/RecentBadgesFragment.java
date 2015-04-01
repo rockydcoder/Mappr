@@ -9,11 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.priyanshu.mappr.Adapters.RecentBadgesAdapter;
+import com.example.priyanshu.mappr.Data.Badge;
 import com.example.priyanshu.mappr.Data.BadgesEarned;
 import com.example.priyanshu.mappr.Data.CommentRow;
 import com.example.priyanshu.mappr.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,6 +25,12 @@ import java.util.List;
 public class RecentBadgesFragment extends Fragment {
     RecyclerView mRecyclerView;
     RecentBadgesAdapter recentBadgesAdapter;
+    ArrayList<Badge> recentBadgesList = new ArrayList<>();
+
+    public RecentBadgesFragment(ArrayList<Badge> recentBadges) {
+        recentBadgesList = recentBadges;
+        Collections.reverse(recentBadgesList);
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,19 +49,23 @@ public class RecentBadgesFragment extends Fragment {
     }
 
     public ArrayList getData(View view){
-        List<BadgesEarned> badgeInfo=BadgesEarnedFragment.getData(view);
-        ArrayList<CommentRow> data=new ArrayList<>();
-        for(int i=0;i<badgeInfo.size();i++){
-            CommentRow info=new CommentRow();
+        List<BadgesEarned> badgeInfo = BadgesEarnedFragment.getData(view);
+        ArrayList<CommentRow> data = new ArrayList<>();
+        SimpleDateFormat ft =
+                new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a zzz");
+        for(int i = 0; i < recentBadgesList.size(); i++) {
+            CommentRow info = new CommentRow();
             String name;
-            if(badgeInfo.get(i).positiveBadge)
-                name="<font color='green'>"+badgeInfo.get(i).getBadgeName()+"</font>";
-            else
-                name="<font color='red'>"+badgeInfo.get(i).getBadgeName()+"</font>";
+            Badge badge = recentBadgesList.get(i);
+            if(badge.isPositiveBadge())
+                name = "<font color=#4CAF50>" + badge.getBadgeTitle() + "</font>";
 
-            info.userName= String.format("%s <font color=#9E9E9E> awarded by </font>" +
-                    "<font color=#1674ab>Mr.Soham Chokshi</font>", name);
-            info.userComment="<font color=#BBBBBB> 5th April 2015, 10:30pm</font>";
+            else
+                name = "<font color='red'>" + badge.getBadgeTitle() + "</font>";
+
+            info.userName = String.format("%s <font color=#9E9E9E> awarded by </font>" +
+                    "<font color=#1674ab>" + badge.getTeacher() + "</font>", name);
+            info.userComment = "<font color=#BBBBBB> " + ft.format(badge.getTimestamp()) + " </font>";
             data.add(info);
         }
 

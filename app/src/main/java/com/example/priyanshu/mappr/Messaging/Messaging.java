@@ -58,8 +58,8 @@ public class Messaging extends ListActivity implements android.app.LoaderManager
         });
         activity.requestWindowFeature(Window.FEATURE_ACTION_BAR);
         setListAdapter(adapter);
-        ActionBar actionBar = activity.getActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
+        //ActionBar actionBar = activity.getActionBar();
+        //actionBar.setDisplayShowTitleEnabled(false);
         getLoaderManager().initLoader(0, null, this);
     }
 

@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +42,7 @@ import com.example.priyanshu.mappr.R;
 import java.util.ArrayList;
 import java.util.List;
 import static com.example.priyanshu.mappr.Activities.LoginPage.name;
+import static com.example.priyanshu.mappr.Activities.LoginPage.dispPic;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -69,6 +73,7 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
     private View mDrawerView;
     private View mFragmentContainerView;
     private TextView tvUsername;
+    private ImageView ivDispPic;
 
     private static int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
@@ -78,6 +83,7 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
     private static String[] titles;
     private static int position = 0;
     private static String userName;
+    private static Bitmap displayPic;
 
     public NavigationDrawerFragment() {
     }
@@ -91,7 +97,7 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         userName = name;
-
+        displayPic = dispPic;
 
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
@@ -121,7 +127,9 @@ public class NavigationDrawerFragment extends Fragment implements CustomAdapter.
                              Bundle savedInstanceState) {
         mDrawerView = inflater.inflate(R.layout.fragment_navigation_drawer, container);
         tvUsername = (TextView) mDrawerView.findViewById(R.id.nav_username);
+        ivDispPic = (ImageView) mDrawerView.findViewById(R.id.disp_pic);
         tvUsername.setText(userName);
+        ivDispPic.setBackground(new BitmapDrawable(getResources(), displayPic));
         mRecyclerView = (RecyclerView) mDrawerView.findViewById(R.id.drawer_list);
         customAdapter = new CustomAdapter(getActivity(), getData());
         customAdapter.setViewOnClickListener(this);

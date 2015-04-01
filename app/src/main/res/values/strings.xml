@@ -26,7 +26,7 @@
         <item>TIMELINE</item>
         <item>GROUPS</item>
         <item>TEACHERS</item>
-        <item>STUDENTS</item>
+        <item>CLASSMATES</item>
     </string-array>
 
     <string-array name="behaviour_fragments_list">
@@ -37,8 +37,15 @@
 
     <string-array name="acads_fragments_list">
         <item>REPORT CARD</item>
-        <item>CLASS TEACHER VIEW</item>
-        <item>PERFORMANCE ANALYSIS</item>
+        <item>EXAM-WISE STATISTICS</item>
+        <item>SUBJECT-WISE STATISTICS</item>
+        <item>COMPARATIVE ANALYSIS</item>
+    </string-array>
+
+    <string-array name="trends_fragments_list">
+        <item>SKILL ENDORSEMENTS</item>
+        <item>RECENT ENDORSEMENTS</item>
+        <item>COMPARATIVE SKILLS CHART</item>
     </string-array>
 
     <string name="title_activity_sign_up_student">SignUpStudent</string>
@@ -50,6 +57,29 @@
         <item>Mrs.</item>
         <item>Dr.</item>
     </string-array>
+
+    <string-array name="badges_list">
+        <item>Hard Work</item>
+        <item>Creativity</item>
+        <item>Helping others</item>
+        <item>Participation in class</item>
+        <item>Respectful</item>
+        <item>Motivated</item>
+        <item>Disrespectful</item>
+        <item>Aggressive</item>
+        <item>Talking out of turn</item>
+        <item>Late to class</item>
+        <item>No homework</item>
+        <item>Untidily dressed</item>
+    </string-array>
+
+    <string-array name="login_type">
+        <item>Student</item>
+        <item>Teacher</item>
+        <item>Parent</item>
+    </string-array>
+
+
     <string name="title_activity_academics">AcademicsActivity</string>
     <string name="title_activity_ex_cur">ExCurActivity</string>
     <string name="title_activity_behaviour">BehaviourActivity</string>
@@ -62,4 +92,10 @@
     <string name="pref_itle_sender_id">219125488842</string>
     <string name="pref_title_server_url">Url</string>
     <string name="title_activity_messaging">Messaging</string>
+
+    <string name="title_activity_splash">Splash</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+
 </resources>

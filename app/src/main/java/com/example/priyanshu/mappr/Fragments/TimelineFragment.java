@@ -3,6 +3,7 @@ package com.example.priyanshu.mappr.Fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,9 +45,8 @@ import com.software.shell.fab.ActionButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import it.gmariotti.cardslib.library.internal.Card;
@@ -64,64 +63,97 @@ import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
  */
 public class TimelineFragment extends Fragment{
 
-    private ActionButton actionButton;
-    ArrayList<CardInfo> cardData=new ArrayList<>();
-    String title="psp";
-    String subTitle="dynamite";
-    ArrayList<Card> cards=new ArrayList<>();
-    public ArrayList<Integer> postIds;
+
+
+    public static ArrayList<Integer> postIds;
     public ArrayList<String> title_=new ArrayList<>();
     public ArrayList<String> subTitle_=new ArrayList<>();
     public ArrayList<String> timeStamp_=new ArrayList<>();
 
     private String url="http://www.mappr.in/ipa/get_status.php?request_type=get_this_post&postid=";
     public static String TimeStamp=System.currentTimeMillis()+"";
+    ActionButton actionButton;
+    AutoCompleteTextView group;
+    Dialog dialog;
+
+    ArrayList<CardInfo> cardData;
+    String title="psp";
+    String subTitle="dynamite";
+    private ArrayList<Card> cards = new ArrayList<>();
     static final String cardInfoTAG="cards";
 
-    public static String iconIdTag="iconId";
+    public static String iconIdTag = "iconId";
     public static String userNameTag="userNames";
     public static String userCommentTag="userComment";
     public static String noOfCommentsTag="noOfComments";
     public static String name="Soham Choksi";
+
     /***************TimeStamp variables******************/
-    private static final int SECOND_MILLIS = 1000;
-    private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
+    private static final int SECONDS = 60;
+    private static final int MINUTE_MILLIS = 60 * SECONDS;
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
 
-    AutoCompleteTextView group;
-    Dialog dialog;
+    private CustomRecycleViewAdapter mCardArrayAdapter;
+    private MapprDatabaseAdapter mapprDatabaseAdapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
     public TimelineFragment(ArrayList<Integer> postIds){
-        this.postIds=postIds;
+       // this.postIds=postIds;
+    }
+    public TimelineFragment(){
+       // this.postIds=new ArrayList<>();
     }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         final View layout = inflater.inflate(R.layout.layout_timeline, container, false);
+        mapprDatabaseAdapter=new MapprDatabaseAdapter(getActivity().getApplicationContext());
        /* LinearLayout cardMainLayout= (LinearLayout)layout.findViewById(R.id.card_recyclerview)
                 .findViewById(R.id.list_cardId).findViewById(R.id.card_main_layout);
 
         cardMainLayout.getLayoutParams().height=300;
         cardMainLayout.invalidate();*/
-        final CustomRecycleViewAdapter mCardArrayAdapter = new CustomRecycleViewAdapter(getActivity(), cards);
+        mCardArrayAdapter = new CustomRecycleViewAdapter(getActivity(), cards);
         if(savedInstanceState==null){
-            for(int id:postIds){
-                Log.d("Id",id+"");
+            cardData=new ArrayList<>();
+            postIds=mapprDatabaseAdapter.getPostIds();
+            /*ArrayList<Integer> userIds=mapprDatabaseAdapter.getUserIds();
+            Log.d("userIds size=",userIds.size()+"");
+            for(int userId:userIds)
+                Log.d("student_userIds",userId+"");
+            */
+            final HashMap<String,HashMap<Integer,String>> users=mapprDatabaseAdapter.getUserNames();
+
+            final ProgressDialog progress = new ProgressDialog(getActivity());
+            progress.setTitle("Retrieving your timeline");
+            progress.setMessage("Receiving posts by Speed-Post :D ");
+            progress.show();
+            for(final int id:postIds){
+
                 RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
                         url+id,
-
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
                                 try {
-                                    title_.add(response.getString("AccountType")+
-                                            response.getString("AccountID"));
+                                    String userType=response.getString("AccountType");
+                                    Integer userId=Integer.parseInt(response.getString("AccountID"));
+                                    Log.d("Account",userType+userId);
+                                    HashMap<Integer,String> nameMap=users.get(userType);
+                                    if(nameMap!=null)
+                                        name=nameMap.get(userId);
+                                    if(name==null||nameMap==null)
+                                        name=userType+" "+userId;
+                                      title_.add(name);
+
+                                    Log.d("user->",name);
+                                    Log.d("Post Date:",response.getString("PostedOn"));
                                     subTitle_.add(response.getString("PostContent"));
                                     timeStamp_.add(response.getString("PostedOn"));
                                     for(int i=0;i<title_.size();i++){
@@ -130,6 +162,7 @@ public class TimelineFragment extends Fragment{
                                         TimeStamp=timeStamp_.get(i);
                                         addCard(cards,title,subTitle,true);
                                     }
+                                    progress.dismiss();
                                     mCardArrayAdapter.notifyItemInserted(mCardArrayAdapter.getItemCount());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -157,7 +190,7 @@ public class TimelineFragment extends Fragment{
             cardData=savedInstanceState.getParcelableArrayList(cardInfoTAG);
             Log.d("savedInstanceState","called");
             for(CardInfo data:cardData) {
-                addCard(cards, data.title, data.subTitle,false);
+                addCard(cards,data.title,data.subTitle,false);
             }
         }
 
@@ -232,15 +265,22 @@ public class TimelineFragment extends Fragment{
                     dialog.show();
                 }
 
-
             }
         });
-
-
+        Log.d("onCreateVIew","size="+cardData.size());
         return layout;
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+/*
+        Log.d("onResume","size="+cardData.size());
+        for(CardInfo data:cardData) {
+            addCard(cards,data.title,data.subTitle,false);
+            mCardArrayAdapter.notifyItemInserted(mCardArrayAdapter.getItemCount());
+        }*/
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -272,15 +312,17 @@ public class TimelineFragment extends Fragment{
                         .highlightView(false)
                         .setupCardElement(ViewToClickToExpand.CardElementUI.CARD);
         card.setViewToClickToExpand(viewToClickToExpand);
-        if(create)
-            cardData.add(new CardInfo(title,subTitle,""));
+        if(create) {
+            cardData.add(new CardInfo(title, subTitle, ""));
+            Log.d("cardData","added");
+        }
         cards.add(card);
     }
 
     public static long currentDate() {
 
 
-        return System.currentTimeMillis();
+        return System.currentTimeMillis()/1000;
     }
     public static String getTimeAgo(long time) {
 
@@ -290,22 +332,30 @@ public class TimelineFragment extends Fragment{
         }
 
         // TODO: localize
-        final long diff = now - time;
-        if (diff < MINUTE_MILLIS) {
+        final long diff = (now - time);
+        if (diff < 60)
             return "just now";
-        } else if (diff < 2 * MINUTE_MILLIS) {
+          else if (diff < 2*60)
             return "a minute ago";
-        } else if (diff < 50 * MINUTE_MILLIS) {
-            return diff / MINUTE_MILLIS + " minutes ago";
-        } else if (diff < 90 * MINUTE_MILLIS) {
+          else if (diff < 50 * 60 )
+            return diff / 60 + " minutes ago";
+          else if (diff < 60 * 60 )
             return "an hour ago";
-        } else if (diff < 24 * HOUR_MILLIS) {
-            return diff / HOUR_MILLIS + " hours ago";
-        } else if (diff < 48 * HOUR_MILLIS) {
+          else if (diff < 86400 )
+            return diff / ( 3600) + " hours ago";
+          else if (diff < 48 * 86400 ) 
             return "yesterday";
-        } else {
-            return diff / DAY_MILLIS + " days ago";
-        }
+          else if (diff < 30 * 86400 )
+            return diff / (86400)+" days ago";
+          else if (diff < 2*30*86400)
+            return "a month ago";
+          else if (diff < 12*30*86400)
+            return diff / (30*24*60*60) + " months ago";
+          else if (diff < 2*365*86400)
+            return "a year ago";
+          else
+            return diff / (365*86400)  + " years ago";
+
     }
 
     @Override
@@ -334,8 +384,8 @@ class CustomHeaderInnerCard extends CardHeader {
             TextView t2 = (TextView) view.findViewById(R.id.text_example2);
             if (t2!=null) {
                 t2.setText(subTitle);
-                int size=subTitle.length()/30;
-                int height=200;
+                int size=subTitle.length()/40;
+                int height;
                 if(size<=2)
                     height=200;
                 else if(size==3)

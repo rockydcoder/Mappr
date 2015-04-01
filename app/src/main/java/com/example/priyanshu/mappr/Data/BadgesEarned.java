@@ -7,6 +7,41 @@ import android.widget.TextView;
  * Created by priyanshu-sekhar on 3/3/15.
  */
 public class BadgesEarned {
+
+    // DATA MEMBERS
+    private String badgeAssigned;
+    private int badgeCount;
+    private boolean positiveBadge;
+    private float badgePercentage;
+    private Drawable badge;
+    private String badgeName;
+
+    public int getBadgeCount() {
+        return badgeCount;
+    }
+
+    public void setBadgeCount(int badgeCount) {
+        this.badgeCount = badgeCount;
+    }
+
+    public boolean isPositiveBadge() {
+        return positiveBadge;
+    }
+
+    public void setPositiveBadge(boolean positiveBadge) {
+        this.positiveBadge = positiveBadge;
+    }
+
+    public float getBadgePercentage() {
+        return badgePercentage;
+    }
+
+    public void setBadgePercentage(float badgePercentage) {
+        this.badgePercentage = badgePercentage;
+    }
+
+
+
     public Drawable getBadge() {
         return badge;
     }
@@ -15,7 +50,7 @@ public class BadgesEarned {
         this.badge = badge;
     }
 
-    private Drawable badge;
+
 
     public String getBadgeName() {
         return badgeName;
@@ -25,7 +60,7 @@ public class BadgesEarned {
         this.badgeName = badgeName;
     }
 
-    private String badgeName;
+
 
     public String getBadgeAssigned() {
         return badgeAssigned;
@@ -35,8 +70,5 @@ public class BadgesEarned {
         this.badgeAssigned = badgeAssigned;
     }
 
-    private String badgeAssigned;
-    public int badgeCount;
-    public boolean positiveBadge;
-    public float badgePercentage;
+
 }

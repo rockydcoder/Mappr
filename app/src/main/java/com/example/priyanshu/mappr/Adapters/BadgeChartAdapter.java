@@ -31,7 +31,7 @@ public class BadgeChartAdapter extends RecyclerView.Adapter<BadgeChartAdapter.My
     public void onBindViewHolder(MyBadgeHolder viewHolder, int i) {
         BadgesEarned badge = data.get(i);
         viewHolder.badgeName.setText(badge.getBadgeName());
-        viewHolder.badgePercentage.setText(badge.badgePercentage+"%");
+        viewHolder.badgePercentage.setText(badge.getBadgePercentage() + "%");
     }
 
     @Override

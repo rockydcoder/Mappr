@@ -13,4 +13,6 @@
     <color name="normal_bg">#EEE</color>
     <drawable name="reply_pressed">#388E3C</drawable>
     <drawable name="reply_normal">#4CAF50</drawable>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

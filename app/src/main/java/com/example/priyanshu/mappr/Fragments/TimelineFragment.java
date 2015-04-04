@@ -5,13 +5,15 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +24,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,12 +31,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.priyanshu.mappr.Activities.CommentPage;
-import com.example.priyanshu.mappr.Adapters.CustomAdapter;
 import com.example.priyanshu.mappr.Adapters.MapprDatabaseAdapter;
 import com.example.priyanshu.mappr.Data.CardInfo;
-import com.example.priyanshu.mappr.Data.SingleRowData;
+import com.example.priyanshu.mappr.Data.CustomExpandCard;
+import com.example.priyanshu.mappr.Data.CustomHeaderInnerCard;
 import com.example.priyanshu.mappr.R;
 import com.example.priyanshu.mappr.network.VolleySingleton;
 import com.software.shell.fab.ActionButton;
@@ -50,18 +49,19 @@ import java.util.HashMap;
 import java.util.List;
 
 import it.gmariotti.cardslib.library.internal.Card;
-import it.gmariotti.cardslib.library.internal.CardExpand;
-import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
-import it.gmariotti.cardslib.library.internal.ViewToClickToExpand;
 import it.gmariotti.cardslib.library.recyclerview.internal.CardArrayRecyclerViewAdapter;
 import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
+
+import static com.example.priyanshu.mappr.Extras.Keys.LogIn.KEY_POST_PICTURE;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_PROFILE_IMAGE;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_PROFILE_PICTURE;
 
 
 /**
  * Created by priyanshu-sekhar on 24/2/15.
  */
-public class TimelineFragment extends Fragment{
+public class TimelineFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
 
 
@@ -69,6 +69,7 @@ public class TimelineFragment extends Fragment{
     public ArrayList<String> title_=new ArrayList<>();
     public ArrayList<String> subTitle_=new ArrayList<>();
     public ArrayList<String> timeStamp_=new ArrayList<>();
+    public ArrayList<Bitmap> postPic_ =new ArrayList<>();
 
     private String url="http://www.mappr.in/ipa/get_status.php?request_type=get_this_post&postid=";
     public static String TimeStamp=System.currentTimeMillis()+"";
@@ -93,10 +94,17 @@ public class TimelineFragment extends Fragment{
     private static final int MINUTE_MILLIS = 60 * SECONDS;
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
-
+    private int count=0;
+    private boolean loading=false;
     private CustomRecycleViewAdapter mCardArrayAdapter;
     private MapprDatabaseAdapter mapprDatabaseAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
+    private ImageLoader imageLoader;
+    private Bitmap dispPic;
+    private Drawable post_pic;
+    public  String picUrl=null;
+    public  String singleUrl=null;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +121,10 @@ public class TimelineFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         final View layout = inflater.inflate(R.layout.layout_timeline, container, false);
         mapprDatabaseAdapter=new MapprDatabaseAdapter(getActivity().getApplicationContext());
+        swipeRefreshLayout=(SwipeRefreshLayout)(layout.findViewById(R.id.card_swipe));
+        swipeRefreshLayout.setOnRefreshListener(this);
+
+        CustomHeaderInnerCard.single=false;
        /* LinearLayout cardMainLayout= (LinearLayout)layout.findViewById(R.id.card_recyclerview)
                 .findViewById(R.id.list_cardId).findViewById(R.id.card_main_layout);
 
@@ -134,54 +146,74 @@ public class TimelineFragment extends Fragment{
             progress.setMessage("Receiving posts by Speed-Post :D ");
             progress.show();
             for(final int id:postIds){
+                if(count<10) {
+                    count++;
+                    RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
+                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
+                            url + id,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        String userType = response.getString("AccountType");
+                                        Integer userId = Integer.parseInt(response.getString("AccountID"));
+                                        Log.d("Account", userType + userId);
+                                        HashMap<Integer, String> nameMap = users.get(userType);
+                                        if (nameMap != null)
+                                            name = nameMap.get(userId);
+                                        if (name == null || nameMap == null)
+                                            name = userType + " " + userId;
+                                        title_.add(name);
 
-                RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
-                JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
-                        url+id,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    String userType=response.getString("AccountType");
-                                    Integer userId=Integer.parseInt(response.getString("AccountID"));
-                                    Log.d("Account",userType+userId);
-                                    HashMap<Integer,String> nameMap=users.get(userType);
-                                    if(nameMap!=null)
-                                        name=nameMap.get(userId);
-                                    if(name==null||nameMap==null)
-                                        name=userType+" "+userId;
-                                      title_.add(name);
+                                        Log.d("user->", name);
+                                        Log.d("Post Date:", response.getString("PostedOn"));
+                                        subTitle_.add(response.getString("PostContent"));
+                                        timeStamp_.add(response.getString("PostedOn"));
+                                        String postPic = response.getString(KEY_POST_PICTURE);
+                                        picUrl=getProfilePicRequestUrl(userType+"s", postPic);
+                                        /*imageLoader.get(getProfilePicRequestUrl(userType, postPic), new ImageLoader.ImageListener() {
+                                            @Override
+                                            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                                                dispPic = response.getBitmap();
+                                                post_pic=new BitmapDrawable(getActivity().getBaseContext().getResources(),
+                                                        dispPic);
+                                                postPic_.add(dispPic);
+                                            }
 
-                                    Log.d("user->",name);
-                                    Log.d("Post Date:",response.getString("PostedOn"));
-                                    subTitle_.add(response.getString("PostContent"));
-                                    timeStamp_.add(response.getString("PostedOn"));
-                                    for(int i=0;i<title_.size();i++){
-                                        title=title_.get(i);
-                                        subTitle=subTitle_.get(i);
-                                        TimeStamp=timeStamp_.get(i);
-                                        addCard(cards,title,subTitle,true);
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                Log.d("Log in", "Display pic error");
+
+                                            }
+                                        });*/
+
+
+                                        for (int i = 0; i < title_.size(); i++) {
+                                            title = title_.get(i);
+                                            subTitle = subTitle_.get(i);
+                                            TimeStamp = timeStamp_.get(i);
+                                            addCard(cards, title, subTitle, true);
+                                        }
+                                        progress.dismiss();
+                                        mCardArrayAdapter.notifyItemInserted(mCardArrayAdapter.getItemCount());
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-                                    progress.dismiss();
-                                    mCardArrayAdapter.notifyItemInserted(mCardArrayAdapter.getItemCount());
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+
                                 }
+                            },
 
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.d("error", error.getMessage());
+
+                                }
                             }
-                        },
 
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.d("error", error.getMessage());
-
-                            }
-                        }
-
-                );
-               requestQueue.add(request);
-
+                    );
+                    requestQueue.add(request);
+                }
             }
 
 
@@ -205,7 +237,8 @@ public class TimelineFragment extends Fragment{
         //Staggered grid view
         CardRecyclerView mRecyclerView = (CardRecyclerView) layout.findViewById(R.id.card_recyclerview);
         mRecyclerView.setHasFixedSize(false);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        final LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
 
         //Set the empty view
         if (mRecyclerView != null) {
@@ -268,7 +301,27 @@ public class TimelineFragment extends Fragment{
             }
         });
         Log.d("onCreateVIew","size="+cardData.size());
+
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int visibleItemCount=linearLayoutManager.getChildCount();
+                int totalItemCount=linearLayoutManager.getItemCount();
+                int pastVisibleItems=linearLayoutManager.findFirstVisibleItemPosition();
+                if(loading){
+                    if((visibleItemCount+pastVisibleItems)<totalItemCount) {
+                        loading = false;
+                    }
+
+                }
+            }
+        });
         return layout;
+    }
+
+    private String getProfilePicRequestUrl(String userType, String postPic) {
+        return URL_PROFILE_PICTURE + userType + URL_PROFILE_IMAGE + postPic;
     }
 
     @Override
@@ -303,15 +356,20 @@ public class TimelineFragment extends Fragment{
         card.addCardExpand(expand);
         //thumbnail
         CardThumbnail thumb = new CardThumbnail(getActivity());
-        thumb.setDrawableResource(R.drawable.soham);
+        if(picUrl!=null) {
+            Log.d("url_pic",picUrl);
+            thumb.setUrlResource(picUrl);
+        }
+        else
+            thumb.setDrawableResource(R.drawable.soham);
         card.addCardThumbnail(thumb);
 
-        //attach expandable view
+        /*//attach expandable view
         ViewToClickToExpand viewToClickToExpand =
                 ViewToClickToExpand.builder()
                         .highlightView(false)
                         .setupCardElement(ViewToClickToExpand.CardElementUI.CARD);
-        card.setViewToClickToExpand(viewToClickToExpand);
+        card.setViewToClickToExpand(viewToClickToExpand);*/
         if(create) {
             cardData.add(new CardInfo(title, subTitle, ""));
             Log.d("cardData","added");
@@ -343,7 +401,7 @@ public class TimelineFragment extends Fragment{
             return "an hour ago";
           else if (diff < 86400 )
             return diff / ( 3600) + " hours ago";
-          else if (diff < 48 * 86400 ) 
+          else if (diff < 48 * 86400 )
             return "yesterday";
           else if (diff < 30 * 86400 )
             return diff / (86400)+" days ago";
@@ -363,251 +421,15 @@ public class TimelineFragment extends Fragment{
         super.onAttach(activity);
     }
 
-}
-class CustomHeaderInnerCard extends CardHeader {
-    private String title;
-    private String subTitle;
-    public CustomHeaderInnerCard(Context context,String title,String subTitle) {
-        super(context, R.layout.card_inner_header_layout);
-        this.title=title;
-        this.subTitle=subTitle;
-    }
-
     @Override
-    public void setupInnerViewElements(ViewGroup parent, View view) {
-
-        if (view!=null){
-            TextView t1 = (TextView) view.findViewById(R.id.text_example1);
-            if (t1!=null)
-                t1.setText(Html.fromHtml(title));
-
-            TextView t2 = (TextView) view.findViewById(R.id.text_example2);
-            if (t2!=null) {
-                t2.setText(subTitle);
-                int size=subTitle.length()/40;
-                int height;
-                if(size<=2)
-                    height=200;
-                else if(size==3)
-                    height=300;
-                else if(size<=6)
-                    height=500;
-                else
-                    height=700;
-                view.getLayoutParams().height=height;
-            }
-
-        }
+    public void onRefresh() {
+        Toast.makeText(getActivity(),"Loading new posts",Toast.LENGTH_SHORT).show();
+        if(swipeRefreshLayout.isRefreshing())
+            swipeRefreshLayout.setRefreshing(false);
     }
 }
-class CustomExpandCard extends CardExpand {
-    private RecyclerView mRecyclerView;
-    private CustomAdapter customAdapter;
-    static ArrayList<SingleRowData> comments;
-    String title=TimelineFragment.name;
-    int noOfComments=0;
-    View commentRow1,commentRow2;
-    ArrayList<Integer> iconId = null;
-    ArrayList<String>  userNames=null;
-    ArrayList<String>  userComments=null;
-
-    ImageView userPic1,userPic2;
-    TextView moreComments,userName1,userName2,userComment1,userComment2;
-    LinearLayout totalLayout,comment1Layout,comment2Layout;
-    EditText et;
-    ImageButton reply;
-    //Use your resource ID for your inner layout
-    public CustomExpandCard(Context context) {
-        super(context, R.layout.card_inner_expand);
-    }
 
 
-    @Override
-    public void setupInnerViewElements(final ViewGroup parent, View view) {
-        if (view == null) return;
-        iconId=new ArrayList<>();
-        userNames=new ArrayList<>();
-        userComments=new ArrayList<>();
-
-        commentRow1=view.findViewById(R.id.commentRow1);
-        commentRow2=view.findViewById(R.id.commentRow2);
-        moreComments=(TextView)view.findViewById(R.id.more_comment);
-        userPic1=(ImageView)commentRow1.findViewById(R.id.profile_picture);
-        userPic2=(ImageView)commentRow2.findViewById(R.id.profile_picture);
-        userName1=(TextView)commentRow1.findViewById(R.id.userName);
-        userName2=(TextView)commentRow2.findViewById(R.id.userName);
-        userComment1=(TextView)commentRow1.findViewById(R.id.userComment);
-        userComment2=(TextView)commentRow2.findViewById(R.id.userComment);
-
-        totalLayout=(LinearLayout)view.findViewById(R.id.commentLayout);
-        comment1Layout=(LinearLayout)totalLayout.findViewById(R.id.comment1Layout);
-        comment2Layout=(LinearLayout)totalLayout.findViewById(R.id.comment2Layout);
-        et  = (EditText)view.findViewById(R.id.commentText);
-        reply = (ImageButton)view.findViewById(R.id.replyButton);
-        updateVisibility(view);
-        et.requestFocus();
-        reply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(et.getText()!=null) {
-                    String userC2=userComment2.getText().toString();
-                    userComment2.setText("");
-                    if(noOfComments==0){
-                        userPic1.setImageResource(R.drawable.soham);
-                        userName1.setText(title);
-                        userComment1.setText(et.getText());
-
-                    }
-                    else if(noOfComments==1){
-                        userPic2.setImageResource(R.drawable.soham);
-                        userName2.setText(title);
-                        userComment2.setText(et.getText());
-
-                    }
-                    else {
-                        userPic1.setImageDrawable(userPic2.getDrawable());
-                        userName1.setText(userName2.getText());
-                        userComment1.setText(userC2);
-                        userPic2.setImageResource(R.drawable.soham);
-                        userName2.setText(title);
-                        userComment2.setText(et.getText());
-                        String text=(noOfComments-1)==1?"...view 1 more comment":
-                                "...view "+(noOfComments-1)+" more comments";
-                        moreComments.setText(text);
-
-                    }
-                    iconId.add(userPic1.getId());
-                    userNames.add(title);
-                    userComments.add(et.getText().toString());
-                    noOfComments++;
-                    view.refreshDrawableState();
-                    updateVisibility(view);
-                    et.setText(null);
-                }
-            }
-        });
-        moreComments.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(view.getContext(), CommentPage.class);
-                intent.putExtra(TimelineFragment.noOfCommentsTag,noOfComments);
-                Log.d(TimelineFragment.noOfCommentsTag,noOfComments+"");
-                intent.putExtra(TimelineFragment.iconIdTag,iconId);
-                intent.putExtra(TimelineFragment.userNameTag,userNames);
-                intent.putExtra(TimelineFragment.userCommentTag,userComments);
-                view.getContext().startActivity(intent);
-            }
-        });
-
-    }
-
-
-    public void updateVisibility(View view){
-        /*totalLayout.setVisibility(View.VISIBLE);
-        moreComments.setVisibility(View.GONE);
-        userPic1.setVisibility(View.GONE);
-        userName1.setVisibility(View.GONE);
-        userComment1.setVisibility(View.GONE);
-        userPic2.setVisibility(View.GONE);
-        userName2.setVisibility(View.GONE);
-        userComment2.setVisibility(View.GONE);
-        et.setVisibility(View.GONE);
-        reply.setVisibility(View.GONE);*/
-
-
-        if(noOfComments==0){
-
-            moreComments.setVisibility(View.GONE);
-            //divider1.setVisibility(View.GONE);
-            userPic1.setVisibility(View.GONE);
-            userName1.setVisibility(View.GONE);
-            userComment1.setVisibility(View.GONE);
-            //divider2.setVisibility(View.GONE);
-            userName2.setVisibility(View.GONE);
-            userPic2.setVisibility(View.GONE);
-            userComment2.setVisibility(View.GONE);
-
-            et.setVisibility(View.VISIBLE);
-            reply.setVisibility(View.VISIBLE);
-            //totalLayout.setVisibility(View.GONE);
-
-
-            //divider3.setVisibility(View.GONE);
-//            ((FrameLayout)view.getParent()).removeView(moreComments);
-        }
-        else if (noOfComments==1){
-            et.setVisibility(View.GONE);
-            reply.setVisibility(View.GONE);
-            //totalLayout.setVisibility(View.VISIBLE);
-            moreComments.setVisibility(View.VISIBLE);
-            userPic1.setVisibility(View.VISIBLE);
-            userName1.setVisibility(View.VISIBLE);
-            userComment1.setVisibility(View.VISIBLE);
-            userName2.setVisibility(View.GONE);
-            userPic2.setVisibility(View.GONE);
-            userComment2.setVisibility(View.GONE);
-
-            moreComments.setVisibility(View.GONE);
-            et.setVisibility(View.VISIBLE);
-            reply.setVisibility(View.VISIBLE);
-
-            et.requestFocus();
-
-
-
-        }
-        else if(noOfComments==2){
-            et.setVisibility(View.GONE);
-            reply.setVisibility(View.GONE);
-            userPic1.setVisibility(View.GONE);
-            userName1.setVisibility(View.GONE);
-            userComment1.setVisibility(View.GONE);
-
-
-            moreComments.setVisibility(View.VISIBLE);
-            userPic1.setVisibility(View.VISIBLE);
-            userName1.setVisibility(View.VISIBLE);
-            userComment1.setVisibility(View.VISIBLE);
-            userPic2.setVisibility(View.VISIBLE);
-            userName2.setVisibility(View.VISIBLE);
-            userComment2.setVisibility(View.VISIBLE);
-            moreComments.setVisibility(View.GONE);
-            et.setVisibility(View.VISIBLE);
-            reply.setVisibility(View.VISIBLE);
-
-            et.requestFocus();
-
-        }
-        else{
-            et.setVisibility(View.GONE);
-            reply.setVisibility(View.GONE);
-            userPic2.setVisibility(View.GONE);
-            userName2.setVisibility(View.GONE);
-            userComment2.setVisibility(View.GONE);
-            userPic1.setVisibility(View.GONE);
-            userName1.setVisibility(View.GONE);
-            userComment1.setVisibility(View.GONE);
-            moreComments.setVisibility(View.GONE);
-
-            et.setVisibility(View.GONE);
-            reply.setVisibility(View.GONE);
-            moreComments.setVisibility(View.VISIBLE);
-            userPic1.setVisibility(View.VISIBLE);
-            userName1.setVisibility(View.VISIBLE);
-            userComment1.setVisibility(View.VISIBLE);
-            userPic2.setVisibility(View.VISIBLE);
-            userName2.setVisibility(View.VISIBLE);
-            userComment2.setVisibility(View.VISIBLE);
-            et.setVisibility(View.VISIBLE);
-            reply.setVisibility(View.VISIBLE);
-
-            et.requestFocus();
-        }
-    }
-
-
-
-}
 class CustomRecycleViewAdapter extends CardArrayRecyclerViewAdapter{
     //List<Card> cards;
     public CustomRecycleViewAdapter(Context context, List<Card> cards) {

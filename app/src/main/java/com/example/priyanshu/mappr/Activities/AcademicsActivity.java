@@ -13,11 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.priyanshu.mappr.Fragments.BadgesEarnedFragment;
 import com.example.priyanshu.mappr.Fragments.CompPerfFragment;
 import com.example.priyanshu.mappr.Fragments.ExamStatsFragment;
 import com.example.priyanshu.mappr.Fragments.NavigationDrawerFragment;
-import com.example.priyanshu.mappr.Fragments.PerfAnalFragment;
 import com.example.priyanshu.mappr.Fragments.ReportCardFragment;
 import com.example.priyanshu.mappr.Fragments.SubStatsFragment;
 import com.example.priyanshu.mappr.R;

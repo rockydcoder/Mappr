@@ -16,10 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.priyanshu.mappr.Adapters.MapprDatabaseAdapter;
-import com.example.priyanshu.mappr.Fragments.GroupsFragment;
 import com.example.priyanshu.mappr.Fragments.NavigationDrawerFragment;
-import com.example.priyanshu.mappr.Fragments.StudentsFragment;
-import com.example.priyanshu.mappr.Fragments.TeachersFragment;
 import com.example.priyanshu.mappr.Fragments.TimelineFragment;
 import com.example.priyanshu.mappr.Messaging.GcmRegistrationAsyncTask;
 import com.example.priyanshu.mappr.Messaging.Messaging;

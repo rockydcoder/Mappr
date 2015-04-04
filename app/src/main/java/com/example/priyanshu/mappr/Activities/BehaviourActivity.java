@@ -13,15 +13,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.android.volley.RequestQueue;
 import com.example.priyanshu.mappr.Data.Badge;
-import com.example.priyanshu.mappr.Data.BadgesEarned;
 import com.example.priyanshu.mappr.Fragments.BadgesEarnedFragment;
 import com.example.priyanshu.mappr.Fragments.NavigationDrawerFragment;
 import com.example.priyanshu.mappr.Fragments.PerfAnalFragment;
 import com.example.priyanshu.mappr.Fragments.RecentBadgesFragment;
 import com.example.priyanshu.mappr.R;
-import com.example.priyanshu.mappr.network.VolleySingleton;
 import com.example.priyanshu.mappr.tabs.SlidingTabLayout;
 
 import java.util.ArrayList;

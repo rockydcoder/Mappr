@@ -82,6 +82,9 @@
             android:name=".Messaging.Messaging"
             android:label="@string/title_activity_messaging" />
         <activity
+            android:name=".Activities.TimelineSinglePost"
+            android:label="@string/timeline_single_post" />
+        <activity
             android:name=".Activities.Splash"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FullscreenTheme" >

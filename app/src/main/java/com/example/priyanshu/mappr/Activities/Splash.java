@@ -1,12 +1,5 @@
 package com.example.priyanshu.mappr.Activities;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.priyanshu.mappr.Activities.util.SystemUiHider;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -23,8 +16,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.priyanshu.mappr.Activities.util.SystemUiHider;
 import com.example.priyanshu.mappr.Adapters.MapprDatabaseAdapter;
-import com.example.priyanshu.mappr.Extras.Keys;
 import com.example.priyanshu.mappr.R;
 import com.example.priyanshu.mappr.network.VolleySingleton;
 
@@ -33,8 +31,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import static com.example.priyanshu.mappr.Extras.URLEndPoints.*;
-import static com.example.priyanshu.mappr.Extras.Keys.Database.*;
+import static com.example.priyanshu.mappr.Extras.Keys.Database.KEY_USER_IDS;
+import static com.example.priyanshu.mappr.Extras.Keys.Database.KEY_USER_NAMES;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_CHAR_AMPERSAND;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_CHAR_EQUAL;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_CHAR_QUESTION;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_LOG_IN;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_REQUEST_TYPE;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_TYPE_ALL;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_USERTYPE;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.

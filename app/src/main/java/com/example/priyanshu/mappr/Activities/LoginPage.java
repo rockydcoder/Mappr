@@ -25,8 +25,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
-
-import static com.example.priyanshu.mappr.Extras.URLEndPoints.*;
 import com.example.priyanshu.mappr.R;
 import com.example.priyanshu.mappr.network.VolleySingleton;
 
@@ -35,19 +33,33 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static com.example.priyanshu.mappr.Extras.Keys.LogIn.KEY_BADGES;
+import static com.example.priyanshu.mappr.Extras.Keys.LogIn.KEY_CLASSMATES_LIST;
 import static com.example.priyanshu.mappr.Extras.Keys.LogIn.KEY_FIRST_NAME;
+import static com.example.priyanshu.mappr.Extras.Keys.LogIn.KEY_GROUPS_LIST;
 import static com.example.priyanshu.mappr.Extras.Keys.LogIn.KEY_LAST_NAME;
 import static com.example.priyanshu.mappr.Extras.Keys.LogIn.KEY_MIDDLE_NAME;
+import static com.example.priyanshu.mappr.Extras.Keys.LogIn.KEY_POST_PICTURE;
+import static com.example.priyanshu.mappr.Extras.Keys.LogIn.KEY_PROFILE_PICTURE;
+import static com.example.priyanshu.mappr.Extras.Keys.LogIn.KEY_RECENT_BADGES;
+import static com.example.priyanshu.mappr.Extras.Keys.LogIn.KEY_STUDENT_ID;
+import static com.example.priyanshu.mappr.Extras.Keys.LogIn.KEY_TEACHERS_LIST;
 import static com.example.priyanshu.mappr.Extras.Keys.LogIn.KEY_WALL_LIST;
 import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_CHAR_AMPERSAND;
 import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_CHAR_EQUAL;
 import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_CHAR_QUESTION;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_GROUP_ID;
 import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_LOG_IN;
 import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_PASSWORD;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_PROFILE_IMAGE;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_PROFILE_PICTURE;
 import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_REQUEST_TYPE;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_STUDENT_ID;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_TEACHER_ID;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_TYPE_GROUP_TITLE;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_TYPE_STUDENT_NAME;
+import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_TYPE_TEACHER_NAME;
 import static com.example.priyanshu.mappr.Extras.URLEndPoints.URL_USERNAME;
-import java.util.ArrayList;
-import static com.example.priyanshu.mappr.Extras.Keys.LogIn.*;
 
 
 public class LoginPage extends ActionBarActivity implements View.OnClickListener {
